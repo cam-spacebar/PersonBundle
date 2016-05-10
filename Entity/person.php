@@ -1,6 +1,6 @@
 <?php
 
-namespace VisageFour\Personbundle\Entity;
+namespace VisageFour\PersonBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Twencha\TwenchaBundle\Entity\registration;
@@ -61,23 +61,6 @@ class person extends BaseUser
      * @ORM\Column(name="mobileNumber", type="string", length=75, unique=true)
      */
     private $mobileNumber;
-
-    /**
-     */
-    private $relatedRegistrationList;
-
-    // $registrationStatus constants: to determine the state of the event registration
-    const NO_EMAIL_PROVIDED             = 0;        // user has not yet provided an email address (usually used when a person is instantiated)
-    const EMAIL_PROVIDED                = 1;        // user has provided email only when registering (not enough to send to ESP
-    const NAME_AND_EMAIL_PROVIDED       = 2;        // user has provided email and name + title - enough to send through to ESP
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="registrationStatus", type="integer")
-     */
-    private $registrationStatus;
-
 
     /**
      * Get id
@@ -162,27 +145,6 @@ class person extends BaseUser
     }
 
     /**
-     * @param \Twencha\TwenchaBundle\Entity\registration $relatedRegistrationList
-     * @return $this
-     */
-    public function addRelatedRegistration(registration $relatedRegistrationList)
-    {
-        $this->relatedRegistrationList->add($relatedRegistrationList);
-
-        return $this;
-    }
-
-    /**
-     * Get relatedRegistrationList
-     *
-     * @return int
-     */
-    public function getRelatedRegistrationList()
-    {
-        return $this->relatedRegistrationList;
-    }
-
-    /**
      * @return string
      */
     public function getTitle()
@@ -199,99 +161,18 @@ class person extends BaseUser
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getRegistrationStatus()
+    public function getMobileNumber()
     {
-        return $this->registrationStatus;
+        return $this->mobileNumber;
     }
 
     /**
-     * @param int $registrationStatus
+     * @param string $mobileNumber
      */
-    public function setRegistrationStatus($registrationStatus)
+    public function setMobileNumber($mobileNumber)
     {
-        $this->registrationStatus = $registrationStatus;
-    }
-
-
-
-    public function __construct()
-    {
-        $this->relatedRegistrationList = new ArrayCollection();
-    }
-
-    static public function getPersonByEmailAddress (EntityManager $em, $EmailAddress) {
-        $personRepo     = $em->getRepository('TwenchaBundle:person');
-        $response       = $personRepo->findOneBy(array(
-            'emailAddress' => $EmailAddress
-        ));
-
-        if (isset($reponse)) {
-            $response->setEm ($em);
-        }
-
-        return $response;
-    }
-
-    /**
-     * @param EntityManager $em
-     * @param $parameters
-     * @return person
-     */
-    static public function getPerson (EntityManager $em, $parameters) {
-        $response     = $em->getRepository('TwenchaBundle:person')
-            ->findOneBy($parameters);
-
-        return $response;
-    }
-
-    static public function getOrCreatePersonByMobile (EntityManager $em, $mobileNo) {
-        $response = person::getPerson ($em, array (
-            'mobile'        => $mobileNo
-        ));
-
-        if ($response == NULL) {
-            // create person
-            $response = person::createPerson($em, $mobileNo);
-
-            $em->persist($response);
-            $em->flush();
-        }
-
-        return $response;
-    }
-
-    /**
-     * @param EntityManager $em
-     * @param $email
-     * @return person
-     */
-    static public function findOrCreatePersonByEmail (EntityManager $em, $email) {
-        $response = person::getPerson ($em, array (
-            'emailAddress'     => $email
-        ));
-
-        if ($response == NULL) {
-            // create person
-            $response = person::createPerson($email);
-
-            $em->persist($response);
-            $em->flush();
-        }
-
-        return $response;
-    }
-
-    static public function createPerson ($emailAddress = NULL) {
-        $response = new person ();
-        $response->setEmailAddress($emailAddress);
-        $response->setRegistrationStatus(person::NO_EMAIL_PROVIDED);
-
-        return $response;
-    }
-
-    public function __toString() {
-        return $this->getEmailAddress();
+        $this->mobileNumber = $mobileNumber;
     }
 }

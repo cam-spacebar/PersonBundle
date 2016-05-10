@@ -1,4 +1,6 @@
+# VisageFour\PersonBundle\config\services.yml
+
 services:
-#    person.example:
-#        class: VisageFour\PersonBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    visagefour.personmanager:
+        class: VisageFour\PersonBundle\Services\PersonManager
+        arguments: ["@doctrine.orm.entity_manager"]

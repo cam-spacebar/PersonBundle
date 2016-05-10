@@ -1,10 +1,9 @@
 <?php
 
-namespace VisageFour\Services\Services;
+namespace VisageFour\PersonBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use VisageFour\PersonBundle\Entity\person;
-
 
 class PersonManager
 {
