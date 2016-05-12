@@ -3,7 +3,7 @@
 namespace VisageFour\PersonBundle\Services;
 
 use Doctrine\ORM\EntityManager;
-use VisageFour\PersonBundle\Entity\person;
+use VisageFour\PersonBundle\Entity\BasePerson;
 
 class PersonManager
 {
@@ -12,20 +12,26 @@ class PersonManager
     public function __construct(EntityManager $em)
     {
         $this->em   = $em;
-        $this->repo = $this->em->getRepository('PersonBundle:person');
+        $this->repo = $this->em->getRepository('PersonBundle:BasePerson');
     }
 
-    public function getPersonByEmailAddress ($EmailAddress) {
+    public function getPersonByEmail ($email) {
         $response       = $this->repo->findOneBy(array(
-            'emailAddress' => $EmailAddress
+            'email' => $email
         ));
+
+        return $response;
+    }
+
+    public function getOneBy ($parameters) {
+        $response       = $this->repo->findOneBy($parameters);
 
         return $response;
     }
 
     /**
      * @param $parameters
-     * @return null|person
+     * @return null|BasePerson
      */
     public function getOnePerson ($parameters) {
         $response     = $this->repo
@@ -36,7 +42,7 @@ class PersonManager
 
     /**
      * @param $mobileNo
-     * @return null|person
+     * @return null|BasePerson
      */
     public function getOrCreatePersonByMobile ($mobileNo) {
         $response = $this->getPerson (array (
@@ -56,36 +62,66 @@ class PersonManager
 
     /**
      * @param $email
-     * @return person
+     * @return BasePerson
      */
     public function findOrCreatePersonByEmail ($email) {
         $response = $this->getOnePerson (array (
-            'emailAddress'     => $email
+            'email'     => $email
         ));
 
         if ($response == NULL) {
             // create person
             $response = $this->createPerson($email);
 
-            $em->persist($response);
-            $em->flush();
+            $this->em->persist($response);
+            $this->em->flush();
         }
 
         return $response;
     }
 
     /**
-     * @param null $emailAddress
-     * @return person
+     * @param null $email
+     * @return BasePerson
      */
-    public function createPerson ($emailAddress = NULL) {
-        $person = new person ();
-        $person->setEmailAddress($emailAddress);
+    public function createPerson ($email = NULL) {
+        $person = new BasePerson ();
+        $person->setEmail($email);
 
         return $person;
     }
 
     public function __toString() {
-        return $this->getEmailAddress();
+        return $this->getEmail();
+    }
+
+    public function isUsernameUnique ($username) {
+        $result = $this->repo->getOneBy(array (
+            'username'      => $username
+        ));
+
+        if (!empty($result)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function createUniqueUsername (BasePerson $basePerson) {
+        if (!empty($basePerson->getUsername())) {
+            throw new \Exception ('user already has a username');
+        }
+        
+        $username = $basePerson->getEmail();
+        if ($this->isUsernameUnique($username)) {
+            return $username;
+        }
+
+        for ($i=1; 1; $i++) {
+            $uniqueUsername = $username.$i;
+            if ($this->isUsernameUnique($uniqueUsername)) {
+                return $uniqueUsername;
+            }
+        }
     }
 }
