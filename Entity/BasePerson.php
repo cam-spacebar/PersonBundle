@@ -1,6 +1,6 @@
 <?php
 
-namespace VisageFour\PersonBundle\Entity;
+namespace VisageFour\Bundle\PersonBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -17,7 +17,7 @@ use Twencha\TwenchaBundle\Entity\person;
  * BasePerson
  *
  * @ORM\Table(name="BasePerson")
- * @ORM\Entity(repositoryClass="VisageFour\PersonBundle\Repository\basePersonRepository")
+ * @ORM\Entity(repositoryClass="VisageFour\Bundle\PersonBundle\Repository\basePersonRepository")
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="discr", type="string")
  * @DiscriminatorMap({"baseperson" = "BasePerson", "person" = "Twencha\TwenchaBundle\Entity\person" })

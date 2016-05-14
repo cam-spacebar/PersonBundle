@@ -1,6 +1,6 @@
 <?php
 
-namespace VisageFour\PersonBundle;
+namespace VisageFour\Bundle\PersonBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

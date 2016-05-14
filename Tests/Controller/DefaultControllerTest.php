@@ -1,6 +1,6 @@
 <?php
 
-namespace VisageFour\PersonBundle\Tests\Controller;
+namespace VisageFour\Bundle\PersonBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

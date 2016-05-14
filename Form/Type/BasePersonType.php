@@ -1,6 +1,6 @@
 <?php
 
-namespace VisageFour\PersonBundle\Form;
+namespace VisageFour\Bundle\PersonBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -110,7 +110,7 @@ class BasePersonType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'VisageFour\PersonBundle\Entity\BasePerson'
+            'data_class' => 'VisageFour\Bundle\PersonBundle\Entity\BasePerson'
         ));
     }
 }
