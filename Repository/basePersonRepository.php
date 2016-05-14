@@ -1,6 +1,6 @@
 <?php
 
-namespace VisageFour\PersonBundle\Repository;
+namespace VisageFour\Bundle\PersonBundle\Repository;
 
 /**
  * personRepository

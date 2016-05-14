@@ -1,6 +1,6 @@
 <?php
 
-namespace VisageFour\PersonBundle\Services;
+namespace VisageFour\Bundle\PersonBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;

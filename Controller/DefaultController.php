@@ -1,6 +1,6 @@
 <?php
 
-namespace VisageFour\PersonBundle\Controller;
+namespace VisageFour\Bundle\PersonBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

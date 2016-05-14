@@ -1,6 +1,6 @@
 <?php
 
-namespace VisageFour\PersonBundle\DependencyInjection;
+namespace VisageFour\Bundle\PersonBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
