@@ -5,14 +5,17 @@ namespace VisageFour\Bundle\PersonBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 
 use Doctrine\ORM\Mapping\DiscriminatorMap;
-use Twencha\TwenchaBundle\Entity\person;
 
+use Symfony\Component\Serializer\Annotation\Groups;
+
+//...iminatorMap({"baseperson" = "BasePerson", "person" = "Twencha\TwenchaBundle\Entity\person" })
 /**
  * BasePerson
  *
@@ -20,7 +23,8 @@ use Twencha\TwenchaBundle\Entity\person;
  * @ORM\Entity(repositoryClass="VisageFour\Bundle\PersonBundle\Repository\basePersonRepository")
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="discr", type="string")
- * @DiscriminatorMap({"baseperson" = "BasePerson", "person" = "Twencha\TwenchaBundle\Entity\person" })
+ * @DiscriminatorMap({"baseperson" = "BasePerson"})
+ *
  * @UniqueEntity(fields="usernameCanonical", errorPath="username", message="fos_user.username.already_used")
  * @ORM\AttributeOverrides({
  *      @ORM\AttributeOverride(name="email", column=@ORM\Column(type="string", name="email", length=255, unique=false, nullable=true)),
@@ -35,6 +39,7 @@ class BasePerson extends BaseUser
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"zapierSpreadsheet"})
      */
     protected $id;
 
@@ -43,6 +48,7 @@ class BasePerson extends BaseUser
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="CreatedAt", type="datetime")
+     * @Groups({"zapierSpreadsheet"})
      */
     private $createdAt;
 
@@ -50,6 +56,7 @@ class BasePerson extends BaseUser
      * @var \DateTime
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="UpdatedAt", type="datetime")
+     * @Groups({"zapierSpreadsheet"})
      */
     private $updatedAt;
 
@@ -57,6 +64,7 @@ class BasePerson extends BaseUser
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=5, nullable=true)
+     * @Groups({"zapierSpreadsheet"})
      */
     private $title;
 
@@ -64,6 +72,7 @@ class BasePerson extends BaseUser
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=20, nullable=true)
+     * @Groups({"zapierSpreadsheet"})
      */
     private $firstName;
 
@@ -71,6 +80,7 @@ class BasePerson extends BaseUser
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=20, nullable=true)
+     * @Groups({"zapierSpreadsheet"})
      */
     private $lastName;
 
@@ -78,8 +88,25 @@ class BasePerson extends BaseUser
      * @var string
      *
      * @ORM\Column(name="mobileNumber", type="string", length=75, unique=true, nullable=true)
+     * @Groups({"zapierSpreadsheet"})
      */
     private $mobileNumber;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @Assert\Length(min=2,max=50)
+     * @Groups({"zapierSpreadsheet"})
+     */
+    private $city;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @Assert\Length(min=2,max=50)
+     * @Groups({"zapierSpreadsheet"})
+     */
+    private $country;
 
     /**
      * Get id

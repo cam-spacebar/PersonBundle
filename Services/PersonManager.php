@@ -3,7 +3,7 @@
 namespace VisageFour\Bundle\PersonBundle\Services;
 
 use Doctrine\ORM\EntityManager;
-use VisageFour\PersonBundle\Entity\BasePerson;
+use VisageFour\Bundle\PersonBundle\Entity\BasePerson;
 
 class PersonManager
 {
