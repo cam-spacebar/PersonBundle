@@ -64,6 +64,10 @@ class BasePerson extends BaseUser
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=5, nullable=true)
+     * @Assert\Choice(
+     *     choices = { "mr", "ms", "mrs" },
+     *     message = "Choose a valid title"
+     * )
      * @Groups({"zapierSpreadsheet"})
      */
     private $title;
@@ -91,6 +95,14 @@ class BasePerson extends BaseUser
      * @Groups({"zapierSpreadsheet"})
      */
     private $mobileNumber;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @Assert\Length(min=2,max=70)
+     * @Groups({"zapierSpreadsheet"})
+     */
+    private $suburb;
 
     /**
      * @var string
@@ -229,6 +241,56 @@ class BasePerson extends BaseUser
     {
         $this->updatedAt = $updatedAt;
     }
+
+    /**
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param string $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSuburb()
+    {
+        return $this->suburb;
+    }
+
+    /**
+     * @param string $suburb
+     */
+    public function setSuburb($suburb)
+    {
+        $this->suburb = $suburb;
+    }
+
+
 
     public function __construct () {
         parent::__construct();
