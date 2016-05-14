@@ -11,8 +11,8 @@ use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 
 use Doctrine\ORM\Mapping\DiscriminatorMap;
-use Twencha\TwenchaBundle\Entity\person;
 
+use Twencha\TwenchaBundle\Entity\person;
 /**
  * BasePerson
  *
@@ -77,7 +77,7 @@ class BasePerson extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="mobileNumber", type="string", length=75, unique=true, nullable=true)
+     * @ORM\Column(name="mobileNumber", type="string", length=75, unique=false, nullable=true)
      */
     private $mobileNumber;
 

@@ -1,6 +1,6 @@
 # VisageFour\PersonBundle\config\services.yml
 
 services:
-    VisageFour.PersonManager:
-        class: VisageFour\PersonBundle\Services\PersonManager
-        arguments: ["@doctrine.orm.entity_manager"]
+    VisageFour.BasePersonManager:
+        class: VisageFour\PersonBundle\Services\BasePersonManager
+        arguments: ["@doctrine.orm.entity_manager", "@event_dispatcher"]
