@@ -9,9 +9,9 @@ use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class BasePersonManager
 {
-    private $em;
-    private $repo;
-    private $logger;
+    protected $em;
+    protected $repo;
+    protected $logger;
 
     public function __construct(
         EntityManager               $em,
@@ -31,6 +31,14 @@ class BasePersonManager
     public function getPersonByEmail ($email) {
         $response       = $this->repo->findOneBy(array(
             'email' => $email
+        ));
+
+        return $response;
+    }
+
+    public function getPersonByMobile ($mobile) {
+        $response       = $this->repo->findOneBy(array(
+            'mobileNumber' => $mobile
         ));
 
         return $response;

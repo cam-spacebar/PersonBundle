@@ -13,13 +13,9 @@ use Doctrine\ORM\Mapping\DiscriminatorColumn;
 
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 
-<<<<<<< HEAD
-use Twencha\TwenchaBundle\Entity\person;
-=======
 use Symfony\Component\Serializer\Annotation\Groups;
 
 //...iminatorMap({"baseperson" = "BasePerson", "person" = "Twencha\TwenchaBundle\Entity\person" })
->>>>>>> 40dbbc59536f735050720970ea5ee9213cfdb062
 /**
  * BasePerson
  *
@@ -297,8 +293,6 @@ class BasePerson extends BaseUser
     {
         $this->suburb = $suburb;
     }
-
-
 
     public function __construct () {
         parent::__construct();
