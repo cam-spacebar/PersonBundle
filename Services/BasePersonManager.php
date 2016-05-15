@@ -3,6 +3,7 @@
 namespace VisageFour\Bundle\PersonBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+<<<<<<< HEAD:Services/BasePersonManager.php
 use Doctrine\ORM\Query\ResultSetMapping;
 use VisageFour\PersonBundle\Entity\BasePerson;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -14,6 +15,21 @@ class BasePersonManager
     protected $dispatcher;
 
     public function __construct(EntityManager $em, EventDispatcherInterface $dispatcher, $repoPath = 'PersonBundle:BasePerson')
+=======
+use VisageFour\Bundle\PersonBundle\Entity\BasePerson;
+
+class BasePersonManager
+{
+    private $em;
+    priv
+
+    public function __construct(
+        EntityManager               $em,
+        EventDispatcherInterface    $dispatcher,
+        LoggerInterface             $logger,
+        $repoPath = 'AnchorcardsBundle:photographer')
+    {
+>>>>>>> 40dbbc59536f735050720970ea5ee9213cfdb062:Services/BasePersonManager.php
     {
         $this->em           = $em;
         $this->repo         = $this->em->getRepository($repoPath);
