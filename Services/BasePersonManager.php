@@ -4,21 +4,24 @@ namespace VisageFour\Bundle\PersonBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use VisageFour\Bundle\PersonBundle\Entity\BasePerson;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class BasePersonManager
 {
     private $em;
-    priv
+    private $repo;
+    private $logger;
 
     public function __construct(
         EntityManager               $em,
         EventDispatcherInterface    $dispatcher,
         LoggerInterface             $logger,
-        $repoPath = 'AnchorcardsBundle:photographer')
-    {
-    {
-        $this->em   = $em;
-        $this->repo = $this->em->getRepository('PersonBundle:BasePerson');
+                                    $repoPath = 'AnchorcardsBundle:photographer'
+    ) {
+        $this->em       = $em;
+        $this->repo     = $this->em->getRepository('PersonBundle:BasePerson');
+        $this->logger   = $logger;
     }
 
     public function getPersonByEmail ($email) {
