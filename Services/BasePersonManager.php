@@ -3,19 +3,6 @@
 namespace VisageFour\Bundle\PersonBundle\Services;
 
 use Doctrine\ORM\EntityManager;
-<<<<<<< HEAD:Services/BasePersonManager.php
-use Doctrine\ORM\Query\ResultSetMapping;
-use VisageFour\PersonBundle\Entity\BasePerson;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-class BasePersonManager
-{
-    protected $em;
-    protected $repo;
-    protected $dispatcher;
-
-    public function __construct(EntityManager $em, EventDispatcherInterface $dispatcher, $repoPath = 'PersonBundle:BasePerson')
-=======
 use VisageFour\Bundle\PersonBundle\Entity\BasePerson;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
@@ -30,17 +17,8 @@ class BasePersonManager
         EntityManager               $em,
         EventDispatcherInterface    $dispatcher,
         LoggerInterface             $logger,
-<<<<<<< HEAD
-                                    $repoPath = 'AnchorcardsBundle:photographer'
+                                    $repoPath = 'PersonBundle:BasePerson'
     ) {
-        $this->em       = $em;
-        $this->repo     = $this->em->getRepository('PersonBundle:BasePerson');
-        $this->logger   = $logger;
-=======
-        $repoPath = 'AnchorcardsBundle:photographer')
-    {
->>>>>>> 40dbbc59536f735050720970ea5ee9213cfdb062:Services/BasePersonManager.php
-    {
         $this->em           = $em;
         $this->repo         = $this->em->getRepository($repoPath);
         $this->dispatcher   = $dispatcher;
@@ -48,7 +26,6 @@ class BasePersonManager
 
     public function createNew () {
         return new BasePerson();
->>>>>>> f7b6cae53da5805afd51dfa6d0f5f84edabb13e9
     }
 
     public function getPersonByEmail ($email) {
