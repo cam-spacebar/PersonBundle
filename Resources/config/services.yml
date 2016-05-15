@@ -1,6 +1,0 @@
-# VisageFour\Bundle\PersonBundle\config\services.yml
-
-services:
-    VisageFour.PersonManager:
-        class: VisageFour\Bundle\PersonBundle\Services\PersonManager
-        arguments: ["@doctrine.orm.entity_manager"]

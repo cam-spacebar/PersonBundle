@@ -13,9 +13,13 @@ use Doctrine\ORM\Mapping\DiscriminatorColumn;
 
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 
+<<<<<<< HEAD
+use Twencha\TwenchaBundle\Entity\person;
+=======
 use Symfony\Component\Serializer\Annotation\Groups;
 
 //...iminatorMap({"baseperson" = "BasePerson", "person" = "Twencha\TwenchaBundle\Entity\person" })
+>>>>>>> 40dbbc59536f735050720970ea5ee9213cfdb062
 /**
  * BasePerson
  *
@@ -91,8 +95,12 @@ class BasePerson extends BaseUser
     /**
      * @var string
      *
+<<<<<<< HEAD
+     * @ORM\Column(name="mobileNumber", type="string", length=75, unique=false, nullable=true)
+=======
      * @ORM\Column(name="mobileNumber", type="string", length=75, unique=true, nullable=true)
      * @Groups({"zapierSpreadsheet"})
+>>>>>>> 40dbbc59536f735050720970ea5ee9213cfdb062
      */
     private $mobileNumber;
 
