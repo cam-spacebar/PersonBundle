@@ -2,4 +2,4 @@
 services:
     VisageFour.PersonManager:
         class: VisageFour\Bundle\PersonBundle\Services\BasePersonManager
-        arguments: ["@doctrine.orm.entity_manager", "@event_dispatcher" "@logger", "PersonBundle:BasePerson"]
+        arguments: ["@doctrine.orm.entity_manager", "@event_dispatcher", "@logger", "PersonBundle:BasePerson"]

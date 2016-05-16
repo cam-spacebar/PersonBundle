@@ -66,13 +66,13 @@ class BasePersonManager
      * @return null|object
      */
     public function getOrCreatePersonByMobile ($mobileNo) {
-        $response = $this->getPerson (array (
+        $response = $this->getOneBy(array (
             'mobile'        => $mobileNo
         ));
 
         if ($response == NULL) {
             // create person
-            $response = $this->createPerson($mobileNo);
+            $response = $this->createBasePerson($mobileNo);
 
             die('die: in PersonManager:getOrcreatePersonbymobile > need to set username before flush/persist');
 
@@ -112,7 +112,7 @@ class BasePersonManager
      * @param null $email
      * @return object
      */
-    public function createPerson ($email = NULL) {
+    public function createBasePerson ($email = NULL) {
         $person = $this->createNew();
         $person->setEmail($email);
 

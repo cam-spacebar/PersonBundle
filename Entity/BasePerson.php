@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
+use Platypuspie\AnchorcardsBundle\Entity\Photographer;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping\InheritanceType;
@@ -16,6 +17,7 @@ use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 //...iminatorMap({"baseperson" = "BasePerson", "person" = "Twencha\TwenchaBundle\Entity\person" })
+//...iminatorMap({"baseperson" = "BasePerson", "photographer" = "Photographer" })
 /**
  * BasePerson
  *
@@ -23,7 +25,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass="VisageFour\Bundle\PersonBundle\Repository\basePersonRepository")
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="discr", type="string")
- * @DiscriminatorMap({"baseperson" = "BasePerson"})
+ * @DiscriminatorMap({"baseperson" = "BasePerson", "photographer" = "Platypuspie\AnchorcardsBundle\Entity\Photographer" })
  *
  * @UniqueEntity(fields="usernameCanonical", errorPath="username", message="fos_user.username.already_used")
  * @ORM\AttributeOverrides({
@@ -91,12 +93,8 @@ class BasePerson extends BaseUser
     /**
      * @var string
      *
-<<<<<<< HEAD
      * @ORM\Column(name="mobileNumber", type="string", length=75, unique=false, nullable=true)
-=======
-     * @ORM\Column(name="mobileNumber", type="string", length=75, unique=true, nullable=true)
      * @Groups({"zapierSpreadsheet"})
->>>>>>> 40dbbc59536f735050720970ea5ee9213cfdb062
      */
     private $mobileNumber;
 
