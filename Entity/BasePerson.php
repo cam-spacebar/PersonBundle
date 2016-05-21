@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping\MappedSuperclass;
 //...iminatorMap({"baseperson" = "BasePerson", "person" = "Twencha\TwenchaBundle\Entity\person" })
 //...iminatorMap({"baseperson" = "BasePerson", "photographer" = "Photographer" })
 /*
@@ -26,6 +27,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      @ORM\AttributeOverride(name="email", column=@ORM\Column(type="string", name="email", length=255, unique=false, nullable=true)),
  *      @ORM\AttributeOverride(name="emailCanonical", column=@ORM\Column(type="string", name="email_canonical", length=255, unique=false, nullable=true))
  * })
+ */
+
+/**
+ * Class BasePerson
+ * @MappedSuperClass
  */
 class BasePerson
 {
