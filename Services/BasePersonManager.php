@@ -28,12 +28,30 @@ class BasePersonManager
         return new BasePerson();
     }
 
+    public function createNewWithValues ($email = '', $mobileNumber = '') {
+        $person = $this->createNew();
+
+        $person->setMobileNumber($mobileNumber);
+        $person->setEmail($email);
+
+        return $person;
+    }
+
     public function getPersonByEmail ($email) {
+        //  $this->em->getRepository('PersonBundle:BasePerson')
         $response       = $this->repo->findOneBy(array(
-            'email' => $email
+            'equipment' => null
         ));
+        dump($response); die();
 
         return $response;
+    }
+
+    public function getPersonById ($id) {
+        $person       = $this->repo->findOneBy(array(
+            'id' => $id
+        ));
+        return $person;
     }
 
     public function getPersonByMobile ($mobile) {
@@ -42,6 +60,18 @@ class BasePersonManager
         ));
 
         return $response;
+    }
+
+    public function getPersonByEmailAddressOrMobile ($email, $mobileNo = null) {
+        if (isset($email)) {
+            $person = $this->getPersonByEmail ($email);
+        }
+
+        if (isset($mobileNo) && empty ($person)) {
+            return $this->getPersonByMobile($mobileNo);
+        }
+
+        return $person;
     }
 
     public function getOneBy ($parameters) {
@@ -95,11 +125,6 @@ class BasePersonManager
         if ($response == NULL) {
             // create person
             $response = $this->createPerson($email);
-
-            $username = $this->createUniqueUsername($response);
-
-            $response->setUsername($this->createUniqueUsername($response));
-            $response->setPassword('1234567890');
 
             $this->em->persist($response);
             $this->em->flush();

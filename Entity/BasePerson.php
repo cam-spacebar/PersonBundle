@@ -1,24 +1,18 @@
 <?php
-
 namespace VisageFour\Bundle\PersonBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 use Platypuspie\AnchorcardsBundle\Entity\Photographer;
-
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
-
 use Doctrine\ORM\Mapping\DiscriminatorMap;
-
 use Symfony\Component\Serializer\Annotation\Groups;
-
 //...iminatorMap({"baseperson" = "BasePerson", "person" = "Twencha\TwenchaBundle\Entity\person" })
 //...iminatorMap({"baseperson" = "BasePerson", "photographer" = "Photographer" })
-/**
+/*
  * BasePerson
  *
  * @ORM\Table(name="BasePerson")
@@ -33,7 +27,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      @ORM\AttributeOverride(name="emailCanonical", column=@ORM\Column(type="string", name="email_canonical", length=255, unique=false, nullable=true))
  * })
  */
-class BasePerson extends BaseUser
+class BasePerson
 {
     /**
      * @var int
@@ -44,24 +38,22 @@ class BasePerson extends BaseUser
      * @Groups({"zapierSpreadsheet"})
      */
     protected $id;
-
     /**
      * @var \DateTime
      *
+     * @ORM\Column(name="createdAt", type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="CreatedAt", type="datetime")
      * @Groups({"zapierSpreadsheet"})
      */
-    private $createdAt;
-
+    protected $createdAt;
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="UpdatedAt", type="datetime")
      * @Groups({"zapierSpreadsheet"})
      */
-    private $updatedAt;
-
+    protected $updatedAt;
     /**
      * @var string
      *
@@ -72,56 +64,62 @@ class BasePerson extends BaseUser
      * )
      * @Groups({"zapierSpreadsheet"})
      */
-    private $title;
-
+    protected $title;
     /**
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=20, nullable=true)
      * @Groups({"zapierSpreadsheet"})
      */
-    private $firstName;
-
+    protected $firstName;
     /**
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=20, nullable=true)
      * @Groups({"zapierSpreadsheet"})
      */
-    private $lastName;
-
+    protected $lastName;
     /**
      * @var string
      *
      * @ORM\Column(name="mobileNumber", type="string", length=75, unique=false, nullable=true)
      * @Groups({"zapierSpreadsheet"})
      */
-    private $mobileNumber;
-
+    protected $mobileNumber;
     /**
      * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=100, unique=false, nullable=true)
+     * @Groups({"zapierSpreadsheet"})
+     */
+    protected $email;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suburb", type="string", length=70, unique=false, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Length(min=2,max=70)
      * @Groups({"zapierSpreadsheet"})
      */
-    private $suburb;
-
+    protected $suburb;
     /**
      * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=50, unique=false, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Length(min=2,max=50)
      * @Groups({"zapierSpreadsheet"})
      */
-    private $city;
-
+    protected $city;
     /**
      * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=50, unique=false, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Length(min=2,max=50)
      * @Groups({"zapierSpreadsheet"})
      */
-    private $country;
-
+    protected $country;
     /**
      * Get id
      *
@@ -131,7 +129,6 @@ class BasePerson extends BaseUser
     {
         return $this->id;
     }
-
     /**
      * Set firstName
      *
@@ -142,10 +139,8 @@ class BasePerson extends BaseUser
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-
         return $this;
     }
-
     /**
      * Get firstName
      *
@@ -155,7 +150,6 @@ class BasePerson extends BaseUser
     {
         return $this->firstName;
     }
-
     /**
      * Set lastName
      *
@@ -166,10 +160,8 @@ class BasePerson extends BaseUser
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-
         return $this;
     }
-
     /**
      * Get lastName
      *
@@ -179,7 +171,6 @@ class BasePerson extends BaseUser
     {
         return $this->lastName;
     }
-
     /**
      * @return string
      */
@@ -187,7 +178,6 @@ class BasePerson extends BaseUser
     {
         return $this->title;
     }
-
     /**
      * @param string $title
      */
@@ -195,7 +185,6 @@ class BasePerson extends BaseUser
     {
         $this->title = $title;
     }
-
     /**
      * @return string
      */
@@ -203,7 +192,6 @@ class BasePerson extends BaseUser
     {
         return $this->mobileNumber;
     }
-
     /**
      * @param string $mobileNumber
      */
@@ -211,7 +199,6 @@ class BasePerson extends BaseUser
     {
         $this->mobileNumber = $mobileNumber;
     }
-
     /**
      * @return \DateTime
      */
@@ -219,7 +206,6 @@ class BasePerson extends BaseUser
     {
         return $this->createdAt;
     }
-
     /**
      * @param \DateTime $createdAt
      */
@@ -227,7 +213,6 @@ class BasePerson extends BaseUser
     {
         $this->createdAt = $createdAt;
     }
-
     /**
      * @return \DateTime
      */
@@ -235,7 +220,6 @@ class BasePerson extends BaseUser
     {
         return $this->updatedAt;
     }
-
     /**
      * @param \DateTime $updatedAt
      */
@@ -243,7 +227,6 @@ class BasePerson extends BaseUser
     {
         $this->updatedAt = $updatedAt;
     }
-
     /**
      * @return string
      */
@@ -251,7 +234,6 @@ class BasePerson extends BaseUser
     {
         return $this->city;
     }
-
     /**
      * @param string $city
      */
@@ -259,7 +241,6 @@ class BasePerson extends BaseUser
     {
         $this->city = $city;
     }
-
     /**
      * @return string
      */
@@ -267,7 +248,6 @@ class BasePerson extends BaseUser
     {
         return $this->country;
     }
-
     /**
      * @param string $country
      */
@@ -275,7 +255,6 @@ class BasePerson extends BaseUser
     {
         $this->country = $country;
     }
-
     /**
      * @return string
      */
@@ -283,7 +262,6 @@ class BasePerson extends BaseUser
     {
         return $this->suburb;
     }
-
     /**
      * @param string $suburb
      */
@@ -291,7 +269,6 @@ class BasePerson extends BaseUser
     {
         $this->suburb = $suburb;
     }
-
     public function __construct () {
         parent::__construct();
     }
