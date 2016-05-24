@@ -42,7 +42,6 @@ class BasePersonManager
         $response       = $this->repo->findOneBy(array(
             'equipment' => null
         ));
-        dump($response); die();
 
         return $response;
     }

@@ -3,8 +3,9 @@ namespace VisageFour\Bundle\PersonBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use FOS\UserBundle\Model\User as BaseUser;
+use Platypuspie\AnchorcardsBundle\Entity\User;
+use VisageFour\Bundle\PersonBundle\Model\BasePersonInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Platypuspie\AnchorcardsBundle\Entity\Photographer;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
@@ -13,6 +14,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 //...iminatorMap({"baseperson" = "BasePerson", "person" = "Twencha\TwenchaBundle\Entity\person" })
 //...iminatorMap({"baseperson" = "BasePerson", "photographer" = "Photographer" })
+
 /*
  * BasePerson
  *
@@ -20,7 +22,7 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
  * @ORM\Entity(repositoryClass="VisageFour\Bundle\PersonBundle\Repository\basePersonRepository")
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="discr", type="string")
- * @DiscriminatorMap({"baseperson" = "BasePerson", "photographer" = "Platypuspie\AnchorcardsBundle\Entity\Photographer" })
+ * @DiscriminatorMap({"baseperson" = "BasePerson"s "photographer" = "Platypuspie\AnchorcardsBundle\Entity\Photographer" })
  *
  * @UniqueEntity(fields="usernameCanonical", errorPath="username", message="fos_user.username.already_used")
  * @ORM\AttributeOverrides({
@@ -28,12 +30,11 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
  *      @ORM\AttributeOverride(name="emailCanonical", column=@ORM\Column(type="string", name="email_canonical", length=255, unique=false, nullable=true))
  * })
  */
-
 /**
  * Class BasePerson
  * @MappedSuperClass
  */
-class BasePerson
+class BasePerson implements BasePersonInterface
 {
     /**
      * @var int
@@ -44,6 +45,7 @@ class BasePerson
      * @Groups({"zapierSpreadsheet"})
      */
     protected $id;
+
     /**
      * @var \DateTime
      *
@@ -52,6 +54,7 @@ class BasePerson
      * @Groups({"zapierSpreadsheet"})
      */
     protected $createdAt;
+
     /**
      * @var \DateTime
      *
@@ -60,6 +63,7 @@ class BasePerson
      * @Groups({"zapierSpreadsheet"})
      */
     protected $updatedAt;
+
     /**
      * @var string
      *
@@ -71,6 +75,7 @@ class BasePerson
      * @Groups({"zapierSpreadsheet"})
      */
     protected $title;
+
     /**
      * @var string
      *
@@ -78,6 +83,7 @@ class BasePerson
      * @Groups({"zapierSpreadsheet"})
      */
     protected $firstName;
+
     /**
      * @var string
      *
@@ -85,6 +91,7 @@ class BasePerson
      * @Groups({"zapierSpreadsheet"})
      */
     protected $lastName;
+
     /**
      * @var string
      *
@@ -92,6 +99,7 @@ class BasePerson
      * @Groups({"zapierSpreadsheet"})
      */
     protected $mobileNumber;
+
     /**
      * @var string
      *
@@ -99,6 +107,7 @@ class BasePerson
      * @Groups({"zapierSpreadsheet"})
      */
     protected $email;
+
     /**
      * @var string
      *
@@ -108,6 +117,7 @@ class BasePerson
      * @Groups({"zapierSpreadsheet"})
      */
     protected $suburb;
+
     /**
      * @var string
      *
@@ -117,6 +127,7 @@ class BasePerson
      * @Groups({"zapierSpreadsheet"})
      */
     protected $city;
+
     /**
      * @var string
      *
@@ -126,6 +137,17 @@ class BasePerson
      * @Groups({"zapierSpreadsheet"})
      */
     protected $country;
+
+    /**
+     * @var User
+     *
+     * @ORM\OneToOne(targetEntity="Platypuspie\AnchorcardsBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="related_FOSuser_id", referencedColumnName="id", unique=true, nullable=true)
+     * })
+     */
+    private $relatedUser;
+
     /**
      * Get id
      *
@@ -135,6 +157,7 @@ class BasePerson
     {
         return $this->id;
     }
+
     /**
      * Set firstName
      *
@@ -147,6 +170,7 @@ class BasePerson
         $this->firstName = $firstName;
         return $this;
     }
+
     /**
      * Get firstName
      *
@@ -156,6 +180,7 @@ class BasePerson
     {
         return $this->firstName;
     }
+
     /**
      * Set lastName
      *
@@ -168,6 +193,7 @@ class BasePerson
         $this->lastName = $lastName;
         return $this;
     }
+
     /**
      * Get lastName
      *
@@ -177,6 +203,7 @@ class BasePerson
     {
         return $this->lastName;
     }
+
     /**
      * @return string
      */
@@ -184,6 +211,7 @@ class BasePerson
     {
         return $this->title;
     }
+
     /**
      * @param string $title
      */
@@ -191,6 +219,7 @@ class BasePerson
     {
         $this->title = $title;
     }
+
     /**
      * @return string
      */
@@ -198,6 +227,7 @@ class BasePerson
     {
         return $this->mobileNumber;
     }
+
     /**
      * @param string $mobileNumber
      */
@@ -205,6 +235,7 @@ class BasePerson
     {
         $this->mobileNumber = $mobileNumber;
     }
+
     /**
      * @return \DateTime
      */
@@ -212,6 +243,7 @@ class BasePerson
     {
         return $this->createdAt;
     }
+
     /**
      * @param \DateTime $createdAt
      */
@@ -226,6 +258,7 @@ class BasePerson
     {
         return $this->updatedAt;
     }
+
     /**
      * @param \DateTime $updatedAt
      */
@@ -233,6 +266,7 @@ class BasePerson
     {
         $this->updatedAt = $updatedAt;
     }
+
     /**
      * @return string
      */
@@ -240,6 +274,7 @@ class BasePerson
     {
         return $this->city;
     }
+
     /**
      * @param string $city
      */
@@ -247,6 +282,7 @@ class BasePerson
     {
         $this->city = $city;
     }
+
     /**
      * @return string
      */
@@ -254,6 +290,7 @@ class BasePerson
     {
         return $this->country;
     }
+
     /**
      * @param string $country
      */
@@ -261,6 +298,7 @@ class BasePerson
     {
         $this->country = $country;
     }
+
     /**
      * @return string
      */
@@ -268,6 +306,7 @@ class BasePerson
     {
         return $this->suburb;
     }
+
     /**
      * @param string $suburb
      */
@@ -275,7 +314,40 @@ class BasePerson
     {
         $this->suburb = $suburb;
     }
+
     public function __construct () {
         parent::__construct();
+    }
+
+    /**
+     * @return string $email
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return User
+     */
+    public function getRelatedUser()
+    {
+        return $this->relatedUser;
+    }
+
+    /**
+     * @param User $relatedUser
+     */
+    public function setRelatedUser(User $relatedUser)
+    {
+        $this->relatedUser = $relatedUser;
     }
 }
