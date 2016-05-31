@@ -39,8 +39,8 @@ class SecurityController extends Controller
                 : null;
         }
 
-        $activeRoute    = 'login_form';
-        $navigation     = PublicSiteController::getNavigation($activeRoute);
+        $navigationService  = $this->container->get('anchorcardsbundle.navigation');
+        $navigation         = $navigationService->getNavigation('login_form');
 
         return $this->render(
             '@Person/Default/login.html.twig',
@@ -59,5 +59,15 @@ class SecurityController extends Controller
      */
     public function checkAction()
     {
+        // route intercepted by Symfony security
+    }
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction()
+    {
+        //die('this should not be displayed');
+        // route intercepted by Symfony security
     }
 }
