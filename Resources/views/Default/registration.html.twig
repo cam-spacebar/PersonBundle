@@ -1,0 +1,29 @@
+{% extends '::basePublic.html.twig' %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' 'AnchorcardsBundle:Forms:form_components.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/person/css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+    <section class="login">
+        <article>
+
+            <h1>Registration</h1>
+
+            To create an account, please complete and submit the form below.
+
+            <br /><br />{% if error %}
+                <div class="error">{{ error.message|trans }}</div>
+            {% endif %}
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+
+        </article>
+    </section>
+{% endblock %}

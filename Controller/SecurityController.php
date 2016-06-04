@@ -22,7 +22,10 @@ class SecurityController extends Controller
      */
     public function loginAction(Request $request)
     {
+        /** @var $authenticationUtils \Symfony\Component\Security\Http\Authentication\AuthenticationUtils */
         $authenticationUtils = $this->get('security.authentication_utils');
+        /** @var $navigationService \Platypuspie\AnchorcardsBundle\Services\Navigation */
+        $navigationService  = $this->container->get('anchorcardsbundle.navigation');
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -39,7 +42,7 @@ class SecurityController extends Controller
                 : null;
         }
 
-        $navigationService  = $this->container->get('anchorcardsbundle.navigation');
+
         $navigation         = $navigationService->getNavigation('login_form');
 
         return $this->render(
