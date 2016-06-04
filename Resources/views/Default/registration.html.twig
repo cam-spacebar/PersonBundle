@@ -10,6 +10,21 @@
 {% endblock %}
 
 {% block body %}
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if app.session.flashBag.has('error') %}
+        <div class="alert alert-danger">
+            {% for msg in app.session.flashBag.get('error') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <section class="securityForm">
         <article>
 
@@ -17,11 +32,7 @@
 
             To create an account, please complete and submit the form below.
 
-            <br /><br />{% if error %}
-                <div class="error">{{ error.message|trans }}</div>
-            {% endif %}
-
-            {{ form_start(form) }}
+            <br /><br />{{ form_start(form) }}
             {{ form_widget(form) }}
             {{ form_end(form, {'attr': {'class': 'form-horizontal'}}) }}
 

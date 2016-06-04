@@ -13,26 +13,31 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType;
 
 class RegistrationController extends Controller
 {
 
     /**
+     * @param Request $request
+     * @return null|RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     *
      * @Route("/register", name="security_registerUser")
      */
     public function registerAction(Request $request)
     {
         /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
         $formFactory = $this->get('fos_user.registration.form.factory');
-        /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-        $userManager = $this->get('fos_user.user_manager');
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
         /** @var $navigationService \Platypuspie\AnchorcardsBundle\Services\Navigation */
         $navigationService  = $this->container->get('anchorcardsbundle.navigation');
+        $navigation         = $navigationService->getNavigation('security_registerUser');
+        /** @var $userManager \Platypuspie\AnchorcardsBundle\Services\UserManager */
+        $userManager = $this->container->get('anchorcards.user_manager');
 
-        $user = $userManager->createUser();
-        $user->setEnabled(true);
+        $user = new User();
 
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
@@ -40,43 +45,59 @@ class RegistrationController extends Controller
         if (null !== $event->getResponse()) {
             return $event->getResponse();
         }
-        $user = new User();
 
         $form = $this->createForm('VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType', $user);
         $form->handleRequest($request);
 
-        //die('next steps: remove userManager Ive created. #2: rename login styles css to be more generic.');
-
-        /*
-        $form = $formFactory->createForm();
-        $form->setData($user);
-        // */
-
-        $form->handleRequest($request);
+        if (
+            ($this->container->get('kernel')->getEnvironment() == 'dev') &&
+            (!($form->isSubmitted()))
+        ) {
+            UserRegistrationFormType::setDefaultData ($form);
+        }
 
         if ($form->isValid()) {
             $event = new FormEvent($form, $request);
             $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
-            $userManager->updateUser($user);
+            $flashBag = $this->get('session')->getFlashBag();
 
-            if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_registration_confirmed');
-                $response = new RedirectResponse($url);
+            // check no other user exists with email address
+            if ($userManager->doesUserEmailExist ($user)) {
+                $flashBag->set('error', 'A user with the email address: "'. $user->getEmail() .'" already exists.');
+            } else {
+                $user->setUsername($user->getEmail());
+                $userManager->updateUser($user);
+
+                $flashBag->set('success', 'Success. Your account: "'. $user->getEmail() .'" has been created.');
+
+                if (null === $response = $event->getResponse()) {
+                    $url = $this->generateUrl('security_registrationComplete');
+                    $response = new RedirectResponse($url);
+                }
+
+                //$dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+
+                return $response;
             }
-
-            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
-            return $response;
         }
-
-        $navigation         = $navigationService->getNavigation('security_registerUser');
 
         return $this->render('@Person/Default/registration.html.twig', array(
             'form'          => $form->createView(),
-            'navigation'    => $navigation,
-            'error'         => null
+            'navigation'    => $navigation
+        ));
+    }
 
+    /**
+     * @Route("/registrationComplete", name="security_registrationComplete")
+     */
+    public function RegistrationCompleteAction (Request $request) {
+        /** @var $navigationService \Platypuspie\AnchorcardsBundle\Services\Navigation */
+        $navigationService  = $this->container->get('anchorcardsbundle.navigation');
+        $navigation         = $navigationService->getNavigation('security_registrationComplete');
+
+        return $this->render('@Person/Default/registrationComplete.html.twig', array(
+            'navigation'    => $navigation
         ));
     }
 

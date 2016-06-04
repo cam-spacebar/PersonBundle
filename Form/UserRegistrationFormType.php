@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -67,5 +68,13 @@ class UserRegistrationFormType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Platypuspie\AnchorcardsBundle\Entity\User'
         ));
+    }
+
+    static public function setDefaultData (Form $form) {
+        $form->get('email')->setData('cameronrobertburns@gmail.com');
+        $form->get('plainPassword')->setData('cameron');
+        //dump($form); die();
+
+        //get('plainPassword')->setData('cameron');
     }
 }
