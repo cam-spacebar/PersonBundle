@@ -1,6 +1,5 @@
 <?php
 
-
 namespace VisageFour\Bundle\PersonBundle\Controller;
 
 use FOS\UserBundle\FOSUserEvents;
@@ -46,6 +45,8 @@ class RegistrationController extends Controller
         $form = $this->createForm('VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType', $user);
         $form->handleRequest($request);
 
+        //die('next steps: remove userManager Ive created. #2: rename login styles css to be more generic.');
+
         /*
         $form = $formFactory->createForm();
         $form->setData($user);
@@ -69,8 +70,7 @@ class RegistrationController extends Controller
             return $response;
         }
 
-
-        $navigation         = $navigationService->getNavigation('login_form');
+        $navigation         = $navigationService->getNavigation('security_registerUser');
 
         return $this->render('@Person/Default/registration.html.twig', array(
             'form'          => $form->createView(),

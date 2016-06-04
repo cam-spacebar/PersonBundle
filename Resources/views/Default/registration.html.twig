@@ -1,14 +1,16 @@
 {% extends '::basePublic.html.twig' %}
 
+{% block title 'Registration' %}
+
 {% form_theme form 'bootstrap_3_layout.html.twig' 'AnchorcardsBundle:Forms:form_components.html.twig' %}
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/person/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/person/css/security.css') }}">
 {% endblock %}
 
 {% block body %}
-    <section class="login">
+    <section class="securityForm">
         <article>
 
             <h1>Registration</h1>
@@ -22,7 +24,6 @@
             {{ form_start(form) }}
             {{ form_widget(form) }}
             {{ form_end(form, {'attr': {'class': 'form-horizontal'}}) }}
-
 
         </article>
     </section>
