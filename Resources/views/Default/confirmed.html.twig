@@ -1,0 +1,30 @@
+{% extends '::basePublic.html.twig' %}
+
+{% block title 'Account activated' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/person/css/security.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <section class="securityForm">
+        <article>
+
+            <h1>Account Activated</h1>
+
+            <p>Your account has been successfully activated.</p>
+
+            <p>You may now use your account section.</p>
+
+        </article>
+    </section>
+{% endblock %}

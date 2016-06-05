@@ -17,7 +17,6 @@ use VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType;
 
 class RegistrationController extends Controller
 {
-
     /**
      * @param Request $request
      * @return null|RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -36,6 +35,17 @@ class RegistrationController extends Controller
         $navigation         = $navigationService->getNavigation('security_registerUser');
         /** @var $userManager \Platypuspie\AnchorcardsBundle\Services\UserManager */
         $userManager = $this->container->get('anchorcards.user_manager');
+
+        die('next steps: #1: write custom emails templates for user registration. #2: setup sendgrid');
+
+
+        /** @var $mailer \FOS\UserBundle\Mailer\Mailer */
+        $user = $userManager->findUserByEmail('cameronrobertburns@gmail.com');
+        /*
+        //dump($user); die();
+        $mailer = $this->get('fos_user.mailer');
+        $mailer->sendConfirmationEmailMessage($user);
+        // */
 
         $user = new User();
 
@@ -106,6 +116,10 @@ class RegistrationController extends Controller
      */
     public function checkEmailAction()
     {
+        /** @var $navigationService \Platypuspie\AnchorcardsBundle\Services\Navigation */
+        $navigationService  = $this->container->get('anchorcardsbundle.navigation');
+        $navigation         = $navigationService->getNavigation('security_registrationComplete');
+
         $email = $this->get('session')->get('fos_user_send_confirmation_email/email');
         $this->get('session')->remove('fos_user_send_confirmation_email/email');
         $user = $this->get('fos_user.user_manager')->findUserByEmail($email);
@@ -114,8 +128,9 @@ class RegistrationController extends Controller
             throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
         }
 
-        return $this->render('FOSUserBundle:Registration:checkEmail.html.twig', array(
-            'user' => $user,
+        return $this->render('@Person/Default/checkEmail.html.twig', array(
+            'user'          => $user,
+            'navigation'    => $navigation
         ));
     }
 
@@ -152,5 +167,42 @@ class RegistrationController extends Controller
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRMED, new FilterUserResponseEvent($user, $request, $response));
 
         return $response;
+    }
+
+    /**
+     * Tell the user his account is now confirmed
+     */
+    public function confirmedAction()
+    {
+        /** @var $navigationService \Platypuspie\AnchorcardsBundle\Services\Navigation */
+        $navigationService  = $this->container->get('anchorcardsbundle.navigation');
+        $navigation         = $navigationService->getNavigation('security_registrationComplete');
+
+        $user = $this->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+
+        return $this->render('PersonBundle:Default:confirmed.html.twig', array(
+            'user'          => $user,
+            'targetUrl'     => $this->getTargetUrlFromSession(),
+            'navigation'    => $navigation
+        ));
+    }
+
+    private function getTargetUrlFromSession()
+    {
+        // Set the SecurityContext for Symfony <2.6
+        if (interface_exists('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface')) {
+            $tokenStorage = $this->get('security.token_storage');
+        } else {
+            $tokenStorage = $this->get('security.context');
+        }
+
+        $key = sprintf('_security.%s.target_path', $tokenStorage->getToken()->getProviderKey());
+
+        if ($this->get('session')->has($key)) {
+            return $this->get('session')->get($key);
+        }
     }
 }
