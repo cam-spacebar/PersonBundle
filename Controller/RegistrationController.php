@@ -36,7 +36,7 @@ class RegistrationController extends Controller
         /** @var $userManager \Platypuspie\AnchorcardsBundle\Services\UserManager */
         $userManager = $this->container->get('anchorcards.user_manager');
 
-        die('next steps: #1: write custom emails templates for user registration. #2: setup sendgrid');
+        die('next steps: #1: create user roles + hierachy - including backoffice staff to create codesets. #2: set adminMenu disply based on user roles');
 
 
         /** @var $mailer \FOS\UserBundle\Mailer\Mailer */
