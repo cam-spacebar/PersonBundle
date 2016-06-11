@@ -111,6 +111,14 @@ class BasePerson implements BasePersonInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="emailCanonical", type="string", length=100, unique=false, nullable=true)
+     * @Groups({"zapierSpreadsheet"})
+     */
+    protected $emailCanonical;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="suburb", type="string", length=70, unique=false, nullable=true)
      * @Assert\NotBlank()
      * @Assert\Length(min=2,max=70)
@@ -320,6 +328,14 @@ class BasePerson implements BasePersonInterface
     }
 
     /**
+     * @return string $emailCanonical
+     */
+    public function getEmailCanonical()
+    {
+        return $this->emailCanonical;
+    }
+
+    /**
      * @return string $email
      */
     public function getEmail()
@@ -333,6 +349,7 @@ class BasePerson implements BasePersonInterface
     public function setEmail($email)
     {
         $this->email = $email;
+        $this->emailCanonical = strtolower($email);
     }
 
     /**

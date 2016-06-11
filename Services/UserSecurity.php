@@ -3,6 +3,7 @@
 namespace VisageFour\Bundle\PersonBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Platypuspie\AnchorcardsBundle\Entity\User;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
@@ -17,6 +18,20 @@ class UserSecurity
     protected $logger;
     protected $securityContext;
 
+    /*
+     * List of roles available:
+     * ROLE_VIEW_PHOTOS
+     * ROLE_DOWNLOAD_ORIGINAL_PHOTOS
+     * ROLE_VIEW_BACKEND
+     * ROLE_UPLOAD_PHOTOS
+     * ROLE_LIST_MY_SHOOTS
+     * ROLE_CREATE_SHOOT
+     * ROLE_VIEW_BACKEND
+     * ROLE_LIST_CODESETS
+     * ROLE_CREATE_CODESETS
+     * ROLE_CREATE_QR_CODES
+     * ROLE_ALLOWED_TO_SWITCH
+     */
     /**
      * UserSecurity constructor.
      *
@@ -31,6 +46,17 @@ class UserSecurity
         $this->logger           = $logger;
         $this->securityContext  = $securityContext;
     }
+
+    public function getPersonLoggedIn () {
+        /** @var $thisUser User */
+        $thisUser = $this->securityContext->getToken()->getUser();
+        //$thisPerson = $this->personManager->getPersonById($thisUser->getId());
+        $thisPerson = $thisUser->getRelatedPerson();
+
+        return $thisPerson;
+
+    }
+
 
     public function checkRole ($roleName, $onErrorRedirect = false) {
         try {

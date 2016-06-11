@@ -18,6 +18,19 @@ use VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType;
 class RegistrationController extends Controller
 {
     /**
+     * @Route("/registrationComplete", name="security_registrationComplete")
+     */
+    public function RegistrationCompleteAction (Request $request) {
+        /** @var $navigationService \Platypuspie\AnchorcardsBundle\Services\Navigation */
+        $navigationService  = $this->container->get('anchorcardsbundle.navigation');
+        $navigation         = $navigationService->getNavigation('security_registrationComplete');
+
+        return $this->render('@Person/Default/registrationComplete.html.twig', array(
+            'navigation'    => $navigation
+        ));
+    }
+
+    /**
      * @param Request $request
      * @return null|RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
@@ -34,35 +47,51 @@ class RegistrationController extends Controller
         $navigationService  = $this->container->get('anchorcardsbundle.navigation');
         $navigation         = $navigationService->getNavigation('security_registerUser');
         /** @var $userManager \Platypuspie\AnchorcardsBundle\Services\UserManager */
-        $userManager = $this->container->get('anchorcards.user_manager');
+        $userManager        = $this->container->get('anchorcards.user_manager');
 
-        /** @var $user \Platypuspie\AnchorcardsBundle\Entity\User */
+
+        /** @var $personManager \Platypuspie\AnchorcardsBundle\Services\PersonManager */
+        $personManager      = $this->container->get('platypuspie.personmanager');
+        /*
+         * // set email address
+
+        $person = $personManager->getPersonByEmail('cameronrobertburns@gmail.com');
+        $person->setEmail('cameronrobertburns@gmail.com');
+        $personManager->updatePerson ($person);
+        die ('updated person');
+        // */
+
+
+        // ADD ROLE_ADMIN
+        /*
         $user = $userManager->findUserByEmail('cameronrobertburns@gmail.com');
 
-        //dump($user->getRoles()); die();
         $role = 'ROLE_ADMIN';
         $user->addRole($role);
         $userManager->updateUser($user);
+        PRINT 'user updated as '. $role;
+        dump($user->getRoles()); die();
+        // /*
+
 
         /** @var $mailer \FOS\UserBundle\Mailer\Mailer */
-
-
-        /*
+        /* SEND CONFIRMATION EMAIL
         //dump($user); die();
         $mailer = $this->get('fos_user.mailer');
         $mailer->sendConfirmationEmailMessage($user);
         // */
 
-        //$user = new User();
 
+        /*
         $event = new GetResponseUserEvent($user, $request);
-        //$dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
-
+        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
 
         if (null !== $event->getResponse()) {
             return $event->getResponse();
         }
+        // */
 
+        $user = new User();
         $form = $this->createForm('VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType', $user);
         $form->handleRequest($request);
 
@@ -75,7 +104,6 @@ class RegistrationController extends Controller
 
         if ($form->isValid()) {
             $event = new FormEvent($form, $request);
-            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
             $flashBag = $this->get('session')->getFlashBag();
 
@@ -84,6 +112,11 @@ class RegistrationController extends Controller
                 $flashBag->set('error', 'A user with the email address: "'. $user->getEmail() .'" already exists.');
             } else {
                 $user->setUsername($user->getEmail());
+                $userManager->findRelatedPerson($user, $personManager);
+
+                //dump($user); die();
+
+                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
                 $userManager->updateUser($user);
 
                 $flashBag->set('success', 'Success. Your account: "'. $user->getEmail() .'" has been created.');
@@ -101,19 +134,6 @@ class RegistrationController extends Controller
 
         return $this->render('@Person/Default/registration.html.twig', array(
             'form'          => $form->createView(),
-            'navigation'    => $navigation
-        ));
-    }
-
-    /**
-     * @Route("/registrationComplete", name="security_registrationComplete")
-     */
-    public function RegistrationCompleteAction (Request $request) {
-        /** @var $navigationService \Platypuspie\AnchorcardsBundle\Services\Navigation */
-        $navigationService  = $this->container->get('anchorcardsbundle.navigation');
-        $navigation         = $navigationService->getNavigation('security_registrationComplete');
-
-        return $this->render('@Person/Default/registrationComplete.html.twig', array(
             'navigation'    => $navigation
         ));
     }
