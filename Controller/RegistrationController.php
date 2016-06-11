@@ -36,21 +36,28 @@ class RegistrationController extends Controller
         /** @var $userManager \Platypuspie\AnchorcardsBundle\Services\UserManager */
         $userManager = $this->container->get('anchorcards.user_manager');
 
-        die('next steps: #1: create user roles + hierachy - including backoffice staff to create codesets. #2: set adminMenu disply based on user roles');
+        /** @var $user \Platypuspie\AnchorcardsBundle\Entity\User */
+        $user = $userManager->findUserByEmail('cameronrobertburns@gmail.com');
 
+        //dump($user->getRoles()); die();
+        $role = 'ROLE_ADMIN';
+        $user->addRole($role);
+        $userManager->updateUser($user);
 
         /** @var $mailer \FOS\UserBundle\Mailer\Mailer */
-        $user = $userManager->findUserByEmail('cameronrobertburns@gmail.com');
+
+
         /*
         //dump($user); die();
         $mailer = $this->get('fos_user.mailer');
         $mailer->sendConfirmationEmailMessage($user);
         // */
 
-        $user = new User();
+        //$user = new User();
 
         $event = new GetResponseUserEvent($user, $request);
-        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
+        //$dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
+
 
         if (null !== $event->getResponse()) {
             return $event->getResponse();

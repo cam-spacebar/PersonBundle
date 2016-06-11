@@ -9,8 +9,9 @@ use Symfony\Component\HttpKernel\Log\LoggerInterface;
 abstract class BaseEntityManager
 {
     protected $em;
-    protected $repo;
+    protected $dispatcher;
     protected $logger;
+    protected $repo;
 
     public function __construct(
         EntityManager               $em,
@@ -21,6 +22,7 @@ abstract class BaseEntityManager
         $this->em           = $em;
         $this->repo         = $this->em->getRepository($repoPath);
         $this->dispatcher   = $dispatcher;
+        $this->logger       = $logger;
 
         // todo: alert logger that manager has been created
     }

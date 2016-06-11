@@ -9,9 +9,14 @@ use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class BasePersonManager
 {
+    // todo:
+    // #1: need to use BaseEntityManager
+    // #2: update with variable to link to new class (as done in FOSUserBundle:UserManager, instead of overriding class
+
     protected $em;
-    protected $repo;
+    protected $dispatcher;
     protected $logger;
+    protected $repo;
 
     public function __construct(
         EntityManager               $em,
@@ -22,6 +27,7 @@ class BasePersonManager
         $this->em           = $em;
         $this->repo         = $this->em->getRepository($repoPath);
         $this->dispatcher   = $dispatcher;
+        $this->logger       = $logger;
     }
 
     public function createNew () {
