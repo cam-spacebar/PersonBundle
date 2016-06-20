@@ -63,7 +63,7 @@ class RegistrationController extends Controller
 
 
         // ADD ROLE_ADMIN
-        
+        /*
         $user = $userManager->findUserByEmail('cameronrobertburns@gmail.com');
 
         $role = 'ROLE_ADMIN';
