@@ -51,7 +51,6 @@ class BasePerson implements BasePersonInterface
      *
      * @ORM\Column(name="createdAt", type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="create")
-     * @Groups({"zapierSpreadsheet"})
      */
     protected $createdAt;
 
@@ -60,7 +59,6 @@ class BasePerson implements BasePersonInterface
      *
      * @ORM\Column(name="updatedAt", type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="update")
-     * @Groups({"zapierSpreadsheet"})
      */
     protected $updatedAt;
 
