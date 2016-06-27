@@ -102,14 +102,13 @@ class BasePersonManager
      */
     public function getOrCreatePersonByMobile ($mobileNo) {
         $response = $this->getOneBy(array (
-            'mobile'        => $mobileNo
+            'mobileNumber'        => $mobileNo
         ));
 
         if ($response == NULL) {
             // create person
-            $response = $this->createBasePerson($mobileNo);
-
-            die('die: in PersonManager:getOrcreatePersonbymobile > need to set username before flush/persist');
+            $response = $this->createNew();
+            $response->setMobileNumber($mobileNo);
 
             $this->em->persist($response);
             $this->em->flush();
@@ -136,17 +135,6 @@ class BasePersonManager
         }
 
         return $response;
-    }
-
-    /**
-     * @param null $email
-     * @return object
-     */
-    public function createBasePerson ($email = NULL) {
-        $person = $this->createNew();
-        $person->setEmail($email);
-
-        return $person;
     }
 
     public function __toString() {

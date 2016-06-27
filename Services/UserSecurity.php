@@ -54,7 +54,6 @@ class UserSecurity
         $thisPerson = $thisUser->getRelatedPerson();
 
         return $thisPerson;
-
     }
 
 

@@ -112,7 +112,7 @@ class RegistrationController extends Controller
                 $flashBag->set('error', 'A user with the email address: "'. $user->getEmail() .'" already exists.');
             } else {
                 $user->setUsername($user->getEmail());
-                $userManager->findRelatedPerson($user, $personManager);
+                $userManager->findOrCreateRelatedPerson($user, $personManager);
 
                 //dump($user); die();
 
