@@ -31,7 +31,11 @@ class UserSecurity
      * ROLE_CREATE_CODESETS
      * ROLE_CREATE_QR_CODES
      * ROLE_ALLOWED_TO_SWITCH
-     */
+     * ROLE_UPLOAD_SAMPLE_IMAGES
+     * ROLE_MANUAL_DECODE
+     *
+     * New, not added to security.yml:
+     *
     /**
      * UserSecurity constructor.
      *
@@ -59,6 +63,7 @@ class UserSecurity
 
     public function checkRole ($roleName, $onErrorRedirect = false) {
         try {
+            //dump($roleName); //die();
             $this->enforceUserSecurity($roleName);
         } catch (AccessDeniedException $e) {
             //$onErrorRedirect = 'AnchorcardsBundle:admin:adminMenu.html.twig';
@@ -69,7 +74,7 @@ class UserSecurity
             }
 
             // todo: create a controller instead of die command
-            die ('Error: You do not have access to view this page. Please login.');
+            die ('Error: You do not have access to view this page ('. $roleName .') Please login.');
         }
     }
 

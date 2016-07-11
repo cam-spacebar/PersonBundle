@@ -13,16 +13,24 @@ abstract class BaseEntityManager
     protected $logger;
     protected $repo;
 
-    public function __construct(
-        EntityManager               $em,
-        EventDispatcherInterface    $dispatcher,
-        LoggerInterface             $logger,
-                                    $repoPath
-    ) {
+    protected $class;
+
+    /**
+     * BaseEntityManager constructor.
+     * @param EntityManager             $em
+     * @param                           $class
+     * @param EventDispatcherInterface  $dispatcher
+     * @param LoggerInterface           $logger
+     */
+    public function __construct($em, $class, $dispatcher, $logger) {
         $this->em           = $em;
-        $this->repo         = $this->em->getRepository($repoPath);
+        $this->repo         = $this->em->getRepository($class);
         $this->dispatcher   = $dispatcher;
         $this->logger       = $logger;
+
+
+        $metadata       = $this->em->getClassMetadata($class);
+        $this->class    = $metadata->getName();
 
         // todo: alert logger that manager has been created
     }

@@ -128,7 +128,8 @@ class BasePersonManager
 
         if ($response == NULL) {
             // create person
-            $response = $this->createPerson($email);
+            $response = $this->createNew();
+            $response->setEmail($email);
 
             $this->em->persist($response);
             $this->em->flush();
