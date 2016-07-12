@@ -3,6 +3,7 @@
 namespace VisageFour\Bundle\PersonBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Monolog\Logger;
 use Platypuspie\AnchorcardsBundle\Entity\User;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
@@ -51,19 +52,33 @@ class UserSecurity
         $this->securityContext  = $securityContext;
     }
 
+    /**
+     * @return \Platypuspie\AnchorcardsBundle\Entity\person
+     */
     public function getPersonLoggedIn () {
         /** @var $thisUser User */
-        $thisUser = $this->securityContext->getToken()->getUser();
+        $thisUser = $this->getUserLoggedIn();
+
         //$thisPerson = $this->personManager->getPersonById($thisUser->getId());
         $thisPerson = $thisUser->getRelatedPerson();
 
         return $thisPerson;
     }
 
+    /**
+     * @return User
+     */
+    public function getUserLoggedIn () {
+        /** @var $thisUser User */
+        $thisUser = $this->securityContext->getToken()->getUser();
+
+        return $thisUser;
+    }
 
     public function checkRole ($roleName, $onErrorRedirect = false) {
         try {
             //dump($roleName); //die();
+
             $this->enforceUserSecurity($roleName);
         } catch (AccessDeniedException $e) {
             //$onErrorRedirect = 'AnchorcardsBundle:admin:adminMenu.html.twig';
@@ -82,9 +97,12 @@ class UserSecurity
     {
         // todo: update to $authorizationChecker as this mehtod is deprecated in sf 3.0
         if (!$this->securityContext->isGranted($role)) {
+            $this->logger->info('user did not pass security requiring role: '. $role);
             // in Symfony 2.5
             // throw $this->createAccessDeniedException('message!');
             throw new AccessDeniedException('Need '. $role);
         }
+
+        $this->logger->info('user passed security. Role required: '. $role);
     }
 }
