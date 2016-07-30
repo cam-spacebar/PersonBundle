@@ -3,6 +3,7 @@
 namespace VisageFour\Bundle\PersonBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Platypuspie\AnchorcardsBundle\Entity\person;
 use VisageFour\Bundle\PersonBundle\Entity\BasePerson;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
@@ -43,10 +44,14 @@ class BasePersonManager
         return $person;
     }
 
+    /**
+     * @param $email
+     * @return null|BasePerson
+     */
     public function getPersonByEmail ($email) {
         //  $this->em->getRepository('PersonBundle:BasePerson')
-        $response       = $this->repo->findOneBy(array(
-            'equipment' => null
+        $response = $this->repo->findOneBy(array(
+            'email' => $email
         ));
 
         return $response;
@@ -59,6 +64,10 @@ class BasePersonManager
         return $person;
     }
 
+    /**
+     * @param $mobile
+     * @return null|person
+     */
     public function getPersonByMobile ($mobile) {
         $response       = $this->repo->findOneBy(array(
             'mobileNumber' => $mobile
@@ -136,6 +145,29 @@ class BasePersonManager
         }
 
         return $response;
+    }
+
+    /**
+     * @param $email
+     * @return person
+     */
+    public function findOrCreatePersonByMobile ($mobileNumber) {
+        $person = $this->getOnePerson (array (
+            'mobileNumber'     => $mobileNumber
+        ));
+
+        if ($person == NULL) {
+            // create person
+            $person = $this->createNew();
+            $person->setMobileNumber($mobileNumber);
+
+            $this->em->persist($person);
+            $this->em->flush();
+        }
+
+        //dump($person);
+
+        return $person;
     }
 
     public function __toString() {

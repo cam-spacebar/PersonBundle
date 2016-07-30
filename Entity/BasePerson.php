@@ -95,7 +95,7 @@ class BasePerson implements BasePersonInterface
      *
      * @ORM\Column(name="mobileNumber", type="string", length=75, unique=false, nullable=true)
      * @Groups({"zapierSpreadsheet"})
-     */
+     */ 
     protected $mobileNumber;
 
     /**
