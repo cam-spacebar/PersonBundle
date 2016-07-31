@@ -128,7 +128,7 @@ class BasePersonManager
 
     /**
      * @param $email
-     * @return null|object
+     * @return null|person
      */
     public function findOrCreatePersonByEmail ($email) {
         $response = $this->getOnePerson (array (
