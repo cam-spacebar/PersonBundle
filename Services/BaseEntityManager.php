@@ -22,7 +22,7 @@ abstract class BaseEntityManager
     }
 
     //*/
-
+    
     protected $em;
     protected $dispatcher;
     protected $logger;
