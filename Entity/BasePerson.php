@@ -2,8 +2,7 @@
 namespace VisageFour\Bundle\PersonBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use FOS\UserBundle\Model\User as BaseUser;
-use Platypuspie\AnchorcardsBundle\Entity\User;
+use VisageFour\Bundle\PersonBundle\Entity\BaseUser;
 use VisageFour\Bundle\PersonBundle\Model\BasePersonInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -145,9 +144,9 @@ class BasePerson implements BasePersonInterface
     protected $country;
 
     /**
-     * @var User
+     * @var BaseUser
      *
-     * @ORM\OneToOne(targetEntity="Platypuspie\AnchorcardsBundle\Entity\User", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="VisageFour\Bundle\PersonBundle\Entity\BaseUser", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="related_FOSuser_id", referencedColumnName="id", unique=true, nullable=true)
      * })
@@ -351,7 +350,7 @@ class BasePerson implements BasePersonInterface
     }
 
     /**
-     * @return User
+     * @return BaseUser
      */
     public function getRelatedUser()
     {
@@ -359,7 +358,7 @@ class BasePerson implements BasePersonInterface
     }
 
     /**
-     * @param User $relatedUser
+     * @param BaseUser $relatedUser
      */
     public function setRelatedUser(User $relatedUser)
     {
