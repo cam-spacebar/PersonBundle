@@ -360,7 +360,7 @@ class BasePerson implements BasePersonInterface
     /**
      * @param BaseUser $relatedUser
      */
-    public function setRelatedUser(User $relatedUser)
+    public function setRelatedUser(BaseUser $relatedUser)
     {
         $this->relatedUser = $relatedUser;
     }

@@ -9,7 +9,7 @@
 
 namespace VisageFour\Bundle\PersonBundle\Model;
 
-use Platypuspie\AnchorcardsBundle\Entity\User;
+use VisageFour\Bundle\PersonBundle\Entity\BaseUser;
 
 interface BasePersonInterface
 {
@@ -45,6 +45,6 @@ interface BasePersonInterface
     public function setCountry ($country);
     public function getCountry ();
 
-    public function setRelatedUser (User $user);
+    public function setRelatedUser (BaseUser $user);
     public function getRelatedUser ();
 }

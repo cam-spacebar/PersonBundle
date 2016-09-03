@@ -30,7 +30,7 @@ class BaseUser extends FOSUser
     /**
      * @var BasePerson
      *
-     * @ORM\OneToOne(targetEntity="VisageFour\Bundle\PersonBundle\Entity\BasePerson\BasePerson", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="VisageFour\Bundle\PersonBundle\Entity\BasePerson", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="related_person_id", referencedColumnName="id", unique=true, nullable=true)
      * })
