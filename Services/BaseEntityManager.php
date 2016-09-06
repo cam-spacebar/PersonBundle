@@ -5,6 +5,7 @@ namespace VisageFour\Bundle\PersonBundle\Services;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
+// todo: remove this from PersonBundle and put into ToolsBundle
 
 abstract class BaseEntityManager
 {
