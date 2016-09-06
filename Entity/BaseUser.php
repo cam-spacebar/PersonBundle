@@ -15,6 +15,7 @@ use VisageFour\Bundle\PersonBundle\Entity\BasePerson;
  * @ORM\Table(name="appuser")
  * @ORM\Entity(repositoryClass="Platypuspie\AnchorcardsBundle\Repository\UserRepository")
  */
+// todo: get code that matches user email address to person email address from anchorcards app - at time of writing this code is not yet finished.
 class BaseUser extends FOSUser
 {
     /**
@@ -27,31 +28,26 @@ class BaseUser extends FOSUser
      */
     protected $id;
 
-    /**
-     * @var BasePerson
+    /*
+     * var BasePerson
      *
      * @ORM\OneToOne(targetEntity="VisageFour\Bundle\PersonBundle\Entity\BasePerson", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="related_person_id", referencedColumnName="id", unique=true, nullable=true)
      * })
      */
-    private $relatedPerson;
+    //private $relatedPerson;
+
+    // todo: when this class is implemented in a final entity, the $relatedPerson must be defined
+    // use the above code but remember to add ath double star to begin / activate the code in the inheriting class: **
+    // remember to add getters and setters
+
 
     /**
-     * @return BasePerson
+     * @return int
      */
-    public function getRelatedPerson()
+    public function getId()
     {
-        return $this->relatedPerson;
+        return $this->id;
     }
-
-    /**
-     * @param BasePerson $relatedPerson
-     */
-    public function setRelatedPerson($relatedPerson)
-    {
-        $this->relatedPerson = $relatedPerson;
-    }
-
-
 }
