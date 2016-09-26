@@ -16,7 +16,7 @@ class BasePersonManager extends BaseEntityManager
         // ...
     }
 
-    public function createNew ($email, $firstName = null, $persist = true) {
+    public function customCreateNew ($email, $firstName = null, $persist = true) {
         // instantiate
         /** @var BasePerson $person */
         $person = parent::createNew();

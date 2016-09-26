@@ -321,7 +321,7 @@ class BasePerson implements BasePersonInterface
     }
 
     public function __construct () {
-        parent::__construct();
+
     }
 
     /**
