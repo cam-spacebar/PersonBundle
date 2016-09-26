@@ -3,36 +3,32 @@
 namespace VisageFour\Bundle\PersonBundle\Services;
 
 use Doctrine\ORM\EntityManager;
-use Platypuspie\AnchorcardsBundle\Entity\person;
+use Psr\Log\LoggerInterface;
 use VisageFour\Bundle\PersonBundle\Entity\BasePerson;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use VisageFour\Bundle\ToolsBundle\Services\BaseEntityManager;
 
-class BasePersonManager
+class BasePersonManager extends BaseEntityManager
 {
-    // todo:
-    // #1: need to use BaseEntityManager
-    // #2: update with variable to link to new class (as done in FOSUserBundle:UserManager, instead of overriding class
-
-    protected $em;
-    protected $dispatcher;
-    protected $logger;
-    protected $repo;
-
-    public function __construct(
-        EntityManager               $em,
-        EventDispatcherInterface    $dispatcher,
-        LoggerInterface             $logger,
-                                    $repoPath = 'PersonBundle:BasePerson'
-    ) {
-        $this->em           = $em;
-        $this->repo         = $this->em->getRepository($repoPath);
-        $this->dispatcher   = $dispatcher;
-        $this->logger       = $logger;
+    public function __construct(EntityManager $em, $class, EventDispatcherInterface $dispatcher, LoggerInterface $logger) {
+        parent::__construct($em, $class, $dispatcher, $logger);
+        // custom config
+        // ...
     }
 
-    public function createNew () {
-        return new BasePerson();
+    public function createNew ($persist = true) {
+        // instantiate
+        $person = parent::createNew();
+
+        // configure
+        // ...
+
+        // persist
+        if ($persist) {
+            $this->em->persist($person);
+        }
+
+        return $person;
     }
 
     public function createNewWithValues ($email = '', $mobileNumber = '') {
@@ -128,7 +124,7 @@ class BasePersonManager
 
     /**
      * @param $email
-     * @return null|person
+     * @return null|BasePerson
      */
     public function findOrCreatePersonByEmail ($email) {
         $response = $this->getOnePerson (array (
@@ -149,7 +145,7 @@ class BasePersonManager
 
     /**
      * @param $email
-     * @return person
+     * @return BasePerson
      */
     public function findOrCreatePersonByMobile ($mobileNumber) {
         $person = $this->getOnePerson (array (
@@ -168,10 +164,6 @@ class BasePersonManager
         //dump($person);
 
         return $person;
-    }
-
-    public function __toString() {
-        return $this->getEmail();
     }
 
     public function isUsernameUnique ($username) {
