@@ -16,12 +16,16 @@ class BasePersonManager extends BaseEntityManager
         // ...
     }
 
-    public function createNew ($persist = true) {
+    public function createNew ($email, $firstName = null, $persist = true) {
         // instantiate
+        /** @var BasePerson $person */
         $person = parent::createNew();
 
         // configure
-        // ...
+        $person->setEmail($email);
+        if (!empty($firstName)) {
+            $person->setFirstName($firstName);
+        }
 
         // persist
         if ($persist) {
@@ -32,7 +36,7 @@ class BasePersonManager extends BaseEntityManager
     }
 
     public function createNewWithValues ($email = '', $mobileNumber = '') {
-        $person = $this->createNew();
+        $person = $this->createNew($email);
 
         $person->setMobileNumber($mobileNumber);
         $person->setEmail($email);
