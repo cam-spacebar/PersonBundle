@@ -4,6 +4,7 @@ namespace VisageFour\Bundle\PersonBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
+use Twencha\Bundle\EventRegistrationBundle\Entity\Person;
 use VisageFour\Bundle\PersonBundle\Entity\BasePerson;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use VisageFour\Bundle\ToolsBundle\Services\BaseEntityManager;
@@ -73,7 +74,26 @@ class BasePersonManager extends BaseEntityManager
             'mobileNumber' => $mobile
         ));
 
+        if (empty($response)) {
+            // try with normalized mobile number too
+            $response       = $this->repo->findOneBy(array(
+                'mobileNumber' => $this->mobileNumberNormalized($mobile)
+            ));
+        }
+
         return $response;
+    }
+
+    public function mobileNumberNormalized ($mobileNum) {
+        return str_replace(' ', '', $mobileNum);
+    }
+
+    public function doesPersonExistByMobile (Person $person) {
+        if (empty($this->getPersonByMobile($person->getMobileNumber()))) {
+            return true;
+        }
+
+        return false;
     }
 
     public function getPersonByEmailAddressOrMobile ($email, $mobileNo = null) {
@@ -223,5 +243,11 @@ class BasePersonManager extends BaseEntityManager
                 throw new \Exception ('been through 500 loops to try to find a username, die();');
             }
         }
+    }
+
+    public function doesPersonExistByEmail ($email) {
+        $person = $this->getPersonByEmail($email);
+
+        return (empty($person)) ? false : true;
     }
 }
