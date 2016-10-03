@@ -74,6 +74,13 @@ class BasePerson implements BasePersonInterface
     protected $title;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="isRegistered", type="boolean")
+     */
+    protected $isRegistered;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=20, nullable=true)
@@ -363,5 +370,21 @@ class BasePerson implements BasePersonInterface
     public function setRelatedUser(BaseUser $relatedUser)
     {
         $this->relatedUser = $relatedUser;
+    }
+
+    /**
+     * @return int
+     */
+    public function isRegistered()
+    {
+        return $this->isRegistered;
+    }
+
+    /**
+     * @param int $isRegistered
+     */
+    public function setIsRegistered($isRegistered)
+    {
+        $this->isRegistered = $isRegistered;
     }
 }
