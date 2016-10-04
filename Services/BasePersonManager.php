@@ -91,11 +91,7 @@ class BasePersonManager extends BaseEntityManager
     }
 
     public function doesPersonExistByMobile (Person $person) {
-        if (empty($this->getPersonByMobile($person->getMobileNumber()))) {
-            return true;
-        }
-
-        return false;
+        return (empty($this->getPersonByMobile($person->getMobileNumber()))) ? false : true;
     }
 
     public function getPersonByEmailAddressOrMobile ($email, $mobileNo = null) {
