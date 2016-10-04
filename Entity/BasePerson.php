@@ -65,6 +65,7 @@ class BasePerson implements BasePersonInterface
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=5, nullable=true)
+     * @Assert\NotBlank(groups={"registration"}, message="Title must be entered")
      * @Assert\Choice(
      *     choices = { "mr", "ms", "mrs" },
      *     message = "Choose a valid title"
@@ -85,6 +86,7 @@ class BasePerson implements BasePersonInterface
      *
      * @ORM\Column(name="firstName", type="string", length=20, nullable=true)
      * @Groups({"zapierSpreadsheet"})
+     * @Assert\NotBlank(groups={"registration"}, message="Name must be entered")
      */
     protected $firstName;
 
@@ -92,6 +94,7 @@ class BasePerson implements BasePersonInterface
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=20, nullable=true)
+     * @Assert\NotBlank(groups={"detailed"}, message="Last name must be entered")
      * @Groups({"zapierSpreadsheet"})
      */
     protected $lastName;
@@ -101,6 +104,7 @@ class BasePerson implements BasePersonInterface
      *
      * @ORM\Column(name="mobileNumber", type="string", length=75, unique=false, nullable=true)
      * @Groups({"zapierSpreadsheet"})
+     * @Assert\NotBlank(groups={"registration"}, message="Mobile number must be entered")
      */ 
     protected $mobileNumber;
 
@@ -109,6 +113,7 @@ class BasePerson implements BasePersonInterface
      *
      * @ORM\Column(name="email", type="string", length=100, unique=false, nullable=true)
      * @Groups({"zapierSpreadsheet"})
+     * @Assert\NotBlank(groups={"registration"}, message="Email address must be entered")
      */
     protected $email;
 
@@ -124,7 +129,7 @@ class BasePerson implements BasePersonInterface
      * @var string
      *
      * @ORM\Column(name="suburb", type="string", length=70, unique=false, nullable=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"detailed"}, message="Suburb must be entered")
      * @Assert\Length(min=2,max=70)
      * @Groups({"zapierSpreadsheet"})
      */
@@ -134,7 +139,7 @@ class BasePerson implements BasePersonInterface
      * @var string
      *
      * @ORM\Column(name="city", type="string", length=50, unique=false, nullable=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"detailed"}, message="City  must be entered")
      * @Assert\Length(min=2,max=50)
      * @Groups({"zapierSpreadsheet"})
      */
@@ -144,7 +149,7 @@ class BasePerson implements BasePersonInterface
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=50, unique=false, nullable=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"detailed"}, message="Country must be entered")
      * @Assert\Length(min=2,max=50)
      * @Groups({"zapierSpreadsheet"})
      */

@@ -20,13 +20,15 @@ class BasePersonManager extends BaseEntityManager
     public function customCreateNew ($email, $firstName = null, $persist = true) {
         // instantiate
         /** @var BasePerson $person */
-        $person = parent::createNew();
+        $person = parent::createNew(false);
 
         // configure
         $person->setEmail($email);
         if (!empty($firstName)) {
             $person->setFirstName($firstName);
         }
+
+        $person->setIsRegistered(false);
 
         // persist
         if ($persist) {
@@ -156,12 +158,10 @@ class BasePersonManager extends BaseEntityManager
         ));
 
         if ($response == NULL) {
-            // create person
-            $response = $this->createNew();
-            $response->setEmail($email);
+            // create new person
+            $response = $this->customCreateNew($email);
 
             $this->em->persist($response);
-            $this->em->flush();
         }
 
         return $response;
