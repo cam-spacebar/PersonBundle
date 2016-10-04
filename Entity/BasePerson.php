@@ -111,6 +111,13 @@ class BasePerson implements BasePersonInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="mobileNumberCanonical", type="string", length=75, unique=true, nullable=true)
+     */
+    protected $mobileNumberCanonical;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="email", type="string", length=100, unique=false, nullable=true)
      * @Groups({"zapierSpreadsheet"})
      * @Assert\NotBlank(groups={"registration"}, message="Email address must be entered")
@@ -250,7 +257,12 @@ class BasePerson implements BasePersonInterface
      */
     public function setMobileNumber($mobileNumber)
     {
+        $this->setMobileNumberCanonical($this->canonicalizeMobileNumber($mobileNumber));
         $this->mobileNumber = $mobileNumber;
+    }
+
+    public function canonicalizeMobileNumber ($mobileNumber) {
+        return str_replace(' ', '', $mobileNumber);
     }
 
     /**
@@ -391,5 +403,21 @@ class BasePerson implements BasePersonInterface
     public function setIsRegistered($isRegistered)
     {
         $this->isRegistered = $isRegistered;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMobileNumberCanonical()
+    {
+        return $this->mobileNumberCanonical;
+    }
+
+    /**
+     * @param string $mobileNumberCanonical
+     */
+    public function setMobileNumberCanonical($mobileNumberCanonical)
+    {
+        $this->mobileNumberCanonical = $mobileNumberCanonical;
     }
 }

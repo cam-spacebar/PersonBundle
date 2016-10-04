@@ -94,6 +94,16 @@ class BasePersonManager extends BaseEntityManager
         return (empty($this->getPersonByMobile($person->getMobileNumber()))) ? false : true;
     }
 
+    public function doesDuplicateExistByMobile (Person $person) {
+        $result = $this->repo->findOneBy(
+            array (
+                'mobileNumberCanonical' => $person->getMobileNumberCanonical()
+            )
+        );
+
+        return (empty($result)) ? false : true;
+    }
+
     public function getPersonByEmailAddressOrMobile ($email, $mobileNo = null) {
         if (isset($email)) {
             $person = $this->getPersonByEmail ($email);
