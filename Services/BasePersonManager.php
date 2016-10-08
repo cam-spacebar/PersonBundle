@@ -91,7 +91,8 @@ class BasePersonManager extends BaseEntityManager
     }
 
     public function doesPersonExistByMobile (Person $person) {
-        return (empty($this->getPersonByMobile($person->getMobileNumber()))) ? false : true;
+        //dump($this->getPersonByMobile($person->getMobileNumber()));
+        return (!empty($this->getPersonByMobile($person->getMobileNumber())));
     }
 
     public function doesDuplicateExistByMobile (Person $person) {
