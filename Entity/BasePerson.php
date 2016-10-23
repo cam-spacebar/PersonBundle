@@ -77,7 +77,7 @@ class BasePerson implements BasePersonInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="isRegistered", type="boolean")
+     * @ORM\Column(name="isRegistered", type="boolean", nullable=true)
      */
     protected $isRegistered;
 

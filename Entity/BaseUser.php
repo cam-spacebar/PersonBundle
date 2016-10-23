@@ -12,7 +12,7 @@ use VisageFour\Bundle\PersonBundle\Entity\BasePerson;
 /**
  * User
  *
- * @ORM\Table(name="appuser")
+ * @ORM\Table(name="base_user")
  * @ORM\Entity(repositoryClass="Platypuspie\AnchorcardsBundle\Repository\UserRepository")
  */
 // todo: get code that matches user email address to person email address from anchorcards app - at time of writing this code is not yet finished.
