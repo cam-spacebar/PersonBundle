@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
 //...iminatorMap({"baseperson" = "BasePerson", "person" = "Twencha\TwenchaBundle\Entity\person" })
 //...iminatorMap({"baseperson" = "BasePerson", "photographer" = "Photographer" })
 
-/*
+/*zz
  * BasePerson
  *
  * @ORM\Table(name="BasePerson")

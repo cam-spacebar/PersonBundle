@@ -53,7 +53,7 @@ class UserSecurity
     }
 
     /**
-     * @return \Platypuspie\AnchorcardsBundle\Entity\person
+     * @return \Platypuspie\AnchorcardsBundle\Entity\Person
      */
     public function getPersonLoggedIn () {
         /** @var $thisUser User */
