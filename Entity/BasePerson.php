@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping\MappedSuperclass;
+use JsonSerializable;
 //...iminatorMap({"baseperson" = "BasePerson", "person" = "Twencha\TwenchaBundle\Entity\person" })
 //...iminatorMap({"baseperson" = "BasePerson", "photographer" = "Photographer" })
 
@@ -33,7 +34,7 @@ use Doctrine\ORM\Mapping\MappedSuperclass;
  * Class BasePerson
  * @MappedSuperClass
  */
-class BasePerson implements BasePersonInterface
+class BasePerson implements BasePersonInterface, JsonSerializable
 {
     /**
      * @var int
@@ -419,5 +420,21 @@ class BasePerson implements BasePersonInterface
     public function setMobileNumberCanonical($mobileNumberCanonical)
     {
         $this->mobileNumberCanonical = $mobileNumberCanonical;
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id'            => $this->id,
+            'createdAt'     => $this->createdAt->format('Y-m-d g:ia'),
+            'title'         => $this->title,
+            'firstName'     => $this->firstName,
+            'lastName'      => $this->lastName,
+            'email'         => $this->emailCanonical,
+            'mobile'        => $this->mobileNumber,
+            'suburb'        => $this->suburb,
+            'city'          => $this->city,
+            'country'       => $this->country,
+        );
     }
 }
