@@ -44,7 +44,4 @@ interface BasePersonInterface
 
     public function setCountry ($country);
     public function getCountry ();
-
-    public function setRelatedUser (BaseUser $user);
-    public function getRelatedUser ();
 }

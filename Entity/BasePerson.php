@@ -164,16 +164,6 @@ class BasePerson implements BasePersonInterface, JsonSerializable
     protected $country;
 
     /**
-     * @var BaseUser
-     *
-     * @ORM\OneToOne(targetEntity="VisageFour\Bundle\PersonBundle\Entity\BaseUser", cascade={"persist"})
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="related_FOSuser_id", referencedColumnName="id", unique=true, nullable=true)
-     * })
-     */
-    private $relatedUser;
-
-    /**
      * Get id
      *
      * @return int
@@ -372,22 +362,6 @@ class BasePerson implements BasePersonInterface, JsonSerializable
     {
         $this->email = $email;
         $this->emailCanonical = strtolower($email);
-    }
-
-    /**
-     * @return BaseUser
-     */
-    public function getRelatedUser()
-    {
-        return $this->relatedUser;
-    }
-
-    /**
-     * @param BaseUser $relatedUser
-     */
-    public function setRelatedUser(BaseUser $relatedUser)
-    {
-        $this->relatedUser = $relatedUser;
     }
 
     /**
