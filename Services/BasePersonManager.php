@@ -257,4 +257,12 @@ class BasePersonManager extends BaseEntityManager
 
         return (empty($person)) ? false : true;
     }
+
+    public function findByEmail ($emailAddress) {
+        $result = $this->repo->findOneBy (array (
+                'emailCanonical'     => $emailAddress
+            ));
+
+        return $result;
+    }
 }
