@@ -196,6 +196,10 @@ class BasePerson implements BasePersonInterface, JsonSerializable
         return $this->firstName;
     }
 
+    public function getFullName () {
+        return $this->getFirstName() .' '. $this->getLastName();
+    }
+
     /**
      * Set lastName
      *
