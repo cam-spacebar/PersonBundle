@@ -7,6 +7,7 @@ use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use Platypuspie\AnchorcardsBundle\Entity\User;
+use Platypuspie\AnchorcardsBundle\Overrides\CustomController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -15,18 +16,14 @@ use FOS\UserBundle\Model\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType;
 
-class RegistrationController extends Controller
+class RegistrationController extends CustomController
 {
     /**
      * @Route("/registrationComplete", name="security_registrationComplete")
      */
+    //todo: this shouldn't rely on a platypuspie customController
     public function RegistrationCompleteAction (Request $request) {
-        /** @var $navigationService \Platypuspie\AnchorcardsBundle\Services\Navigation */
-        $navigationService  = $this->container->get('anchorcardsbundle.navigation');
-        $navigation         = $navigationService->getNavigation('security_registrationComplete');
-
         return $this->render('@Person/Default/registrationComplete.html.twig', array(
-            'navigation'    => $navigation
         ));
     }
 
