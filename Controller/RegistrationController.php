@@ -40,9 +40,7 @@ class RegistrationController extends CustomController
         $formFactory = $this->get('fos_user.registration.form.factory');
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
-        /** @var $navigationService \Platypuspie\AnchorcardsBundle\Services\Navigation */
-        $navigationService  = $this->container->get('anchorcardsbundle.navigation');
-        $navigation         = $navigationService->getNavigation('security_registerUser');
+
         /** @var $userManager \Platypuspie\AnchorcardsBundle\Services\UserManager */
         $userManager        = $this->container->get('anchorcards.user_manager');
 
@@ -130,8 +128,7 @@ class RegistrationController extends CustomController
         }
 
         return $this->render('@Person/Default/registration.html.twig', array(
-            'form'          => $form->createView(),
-            'navigation'    => $navigation
+            'form'          => $form->createView()
         ));
     }
 
@@ -140,10 +137,6 @@ class RegistrationController extends CustomController
      */
     public function checkEmailAction()
     {
-        /** @var $navigationService \Platypuspie\AnchorcardsBundle\Services\Navigation */
-        $navigationService  = $this->container->get('anchorcardsbundle.navigation');
-        $navigation         = $navigationService->getNavigation('security_registrationComplete');
-
         $email = $this->get('session')->get('fos_user_send_confirmation_email/email');
         $this->get('session')->remove('fos_user_send_confirmation_email/email');
         $user = $this->get('fos_user.user_manager')->findUserByEmail($email);
@@ -153,8 +146,7 @@ class RegistrationController extends CustomController
         }
 
         return $this->render('@Person/Default/checkEmail.html.twig', array(
-            'user'          => $user,
-            'navigation'    => $navigation
+            'user'          => $user
         ));
     }
 
@@ -198,10 +190,6 @@ class RegistrationController extends CustomController
      */
     public function confirmedAction()
     {
-        /** @var $navigationService \Platypuspie\AnchorcardsBundle\Services\Navigation */
-        $navigationService  = $this->container->get('anchorcardsbundle.navigation');
-        $navigation         = $navigationService->getNavigation('security_registrationComplete');
-
         $user = $this->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
@@ -209,8 +197,7 @@ class RegistrationController extends CustomController
 
         return $this->render('PersonBundle:Default:confirmed.html.twig', array(
             'user'          => $user,
-            'targetUrl'     => $this->getTargetUrlFromSession(),
-            'navigation'    => $navigation
+            'targetUrl'     => $this->getTargetUrlFromSession()
         ));
     }
 
