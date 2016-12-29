@@ -1,5 +1,7 @@
 <?php
+
 namespace VisageFour\Bundle\PersonBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use VisageFour\Bundle\PersonBundle\Entity\BaseUser;
@@ -12,6 +14,8 @@ use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 use JsonSerializable;
+use VisageFour\Bundle\ToolsBundle\Interfaces\CanNormalize;
+
 //...iminatorMap({"baseperson" = "BasePerson", "person" = "Twencha\TwenchaBundle\Entity\person" })
 //...iminatorMap({"baseperson" = "BasePerson", "photographer" = "Photographer" })
 
@@ -34,7 +38,7 @@ use JsonSerializable;
  * Class BasePerson
  * @MappedSuperClass
  */
-class BasePerson implements BasePersonInterface, JsonSerializable
+class BasePerson implements BasePersonInterface, JsonSerializable, CanNormalize
 {
     /**
      * @var int
@@ -404,7 +408,7 @@ class BasePerson implements BasePersonInterface, JsonSerializable
     {
         return array(
             'id'            => $this->id,
-            'createdAt'     => $this->createdAt->format('Y-m-d g:ia'),
+            'createdAt'     => $this->createdAt->format('Y-m-d g:i s'),
             'title'         => $this->title,
             'firstName'     => $this->firstName,
             'lastName'      => $this->lastName,
@@ -414,5 +418,10 @@ class BasePerson implements BasePersonInterface, JsonSerializable
             'city'          => $this->city,
             'country'       => $this->country,
         );
+    }
+
+    public function normalize()
+    {
+        $this->jsonSerialize();
     }
 }
