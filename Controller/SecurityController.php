@@ -7,13 +7,12 @@
  */
 
 namespace VisageFour\Bundle\PersonBundle\Controller;
-
-use Platypuspie\AnchorcardsBundle\Controller\PublicSiteController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+// note: no longer used by Anchorcards, so can be modified as needed.
 class SecurityController extends Controller
 {
     /**
