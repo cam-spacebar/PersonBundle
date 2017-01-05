@@ -69,7 +69,7 @@ class BasePersonManager extends BaseEntityManager
 
     /**
      * @param $mobile
-     * @return null|person
+     * @return null|BasePerson
      */
     public function getPersonByMobile ($mobile) {
         $response       = $this->repo->findOneBy(array(
@@ -90,12 +90,12 @@ class BasePersonManager extends BaseEntityManager
         return str_replace(' ', '', $mobileNum);
     }
 
-    public function doesPersonExistByMobile (Person $person) {
+    public function doesPersonExistByMobile (BasePerson $person) {
         //dump($this->getPersonByMobile($person->getMobileNumber()));
         return (!empty($this->getPersonByMobile($person->getMobileNumber())));
     }
 
-    public function doesDuplicateExistByMobile (Person $person) {
+    public function doesDuplicateExistByMobile (BasePerson $person) {
         $result = $this->repo->findOneBy(
             array (
                 'mobileNumberCanonical' => $person->getMobileNumberCanonical()
@@ -117,6 +117,10 @@ class BasePersonManager extends BaseEntityManager
         return $person;
     }
 
+    /**
+     * @param $parameters
+     * @return null|BasePerson
+     */
     public function getOneBy ($parameters) {
         $response       = $this->repo->findOneBy($parameters);
 
@@ -125,7 +129,7 @@ class BasePersonManager extends BaseEntityManager
 
     /**
      * @param $parameters
-     * @return null|object
+     * @return null|BasePerson
      */
     public function getOnePerson ($parameters) {
         $response     = $this->repo
@@ -136,7 +140,7 @@ class BasePersonManager extends BaseEntityManager
 
     /**
      * @param $mobileNo
-     * @return null|object
+     * @return null|BasePerson
      */
     public function getOrCreatePersonByMobile ($mobileNo) {
         $response = $this->getOneBy(array (
