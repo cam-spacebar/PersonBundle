@@ -68,14 +68,12 @@ class RegistrationController extends CustomController
         dump($user->getRoles()); die();
         // /*
 
-
         /** @var $mailer \FOS\UserBundle\Mailer\Mailer */
         /* SEND CONFIRMATION EMAIL
         //dump($user); die();
         $mailer = $this->get('fos_user.mailer');
         $mailer->sendConfirmationEmailMessage($user);
         // */
-
 
         /*
         $event = new GetResponseUserEvent($user, $request);
