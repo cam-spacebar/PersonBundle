@@ -6,8 +6,6 @@ use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
-use Platypuspie\AnchorcardsBundle\Entity\User;
-use Platypuspie\AnchorcardsBundle\Overrides\CustomController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,7 +14,7 @@ use FOS\UserBundle\Model\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType;
 
-class RegistrationController extends CustomController
+class RegistrationController extends Controller
 {
     /**
      * @Route("/registrationComplete", name="security_registrationComplete")
