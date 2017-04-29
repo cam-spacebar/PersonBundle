@@ -6,6 +6,8 @@ use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
+use Platypuspie\AnchorcardsBundle\Overrides\CustomController;
+use Platypuspie\AnchorcardsBundle\Services\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -14,12 +16,12 @@ use FOS\UserBundle\Model\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType;
 
-class RegistrationController extends Controller
+class RegistrationController extends CustomController
 {
     /**
      * @Route("/registrationComplete", name="security_registrationComplete")
      */
-    //todo: this shouldn't rely on a platypuspie customController
+    // todo: this shouldn't rely on a platypuspie customController
     public function RegistrationCompleteAction (Request $request) {
         return $this->render('@Person/Default/registrationComplete.html.twig', array(
         ));
@@ -44,7 +46,7 @@ class RegistrationController extends Controller
 
 
         /** @var $personManager \Platypuspie\AnchorcardsBundle\Services\PersonManager */
-        $personManager      = $this->container->get('platypuspie.personmanager');
+        //$personManager      = $this->container->get('platypuspie.personmanager');
         /*
          * // set email address
 
@@ -82,8 +84,12 @@ class RegistrationController extends Controller
         }
         // */
 
-        $user = new User();
-        $form = $this->createForm('VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType', $user);
+
+        /** @var UserManager $userManager */
+        $userManager = $this->get('anchorcards.user_manager');
+
+        $data = array ();
+        $form = $this->createForm('VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType', $data);
         $form->handleRequest($request);
 
         if (
@@ -93,33 +99,25 @@ class RegistrationController extends Controller
             UserRegistrationFormType::setDefaultData ($form);
         }
 
+        // todo: this processing should occur in the form. The form needs to be updated to the new form structure.
+        // may even be able to get form to handle a default redirect process and result handling
         if ($form->isValid()) {
-            $event = new FormEvent($form, $request);
-
-            $flashBag = $this->get('session')->getFlashBag();
-
+            $data = $form->getData();
+            $resultCode = $userManager->createUserandPerson($data['email'], $data['plainPassword']);
             // check no other user exists with email address
-            if ($userManager->doesUserEmailExist ($user)) {
-                $flashBag->set('error', 'A user with the email address: "'. $user->getEmail() .'" already exists.');
-            } else {
-                $user->setUsername($user->getEmail());
-                $userManager->findOrCreateRelatedPerson($user, $personManager);
+            $msgType = '';
+            switch ($resultCode) {
+                case UserManager::USER_EXISTS_ERROR_CODE:
+                    $this->addFlash('error', $userManager->returnResultMsg($data['email'], $resultCode));
+                    break;
+                case UserManager::USER_CREATED_INFO_CODE:
+                    $this->addFlash('success', $userManager->returnResultMsg($data['email'], $resultCode));
 
-                //dump($user); die();
-
-                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
-                $userManager->updateUser($user);
-
-                $flashBag->set('success', 'Success. Your account: "'. $user->getEmail() .'" has been created.');
-
-                if (null === $response = $event->getResponse()) {
-                    $url = $this->generateUrl('security_registrationComplete');
+                    $url = $this->generateUrl('anchorcards_homepage');
                     $response = new RedirectResponse($url);
-                }
 
-                //$dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
-                return $response;
+                    return $response;
+                    break;
             }
         }
 

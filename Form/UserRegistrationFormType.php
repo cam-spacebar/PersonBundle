@@ -66,7 +66,7 @@ class UserRegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Platypuspie\AnchorcardsBundle\Entity\User'
+            'data_class' => null
         ));
     }
 
