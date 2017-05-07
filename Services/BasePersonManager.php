@@ -217,7 +217,6 @@ class BasePersonManager extends BaseEntityManager
         //$stmt = $conn->prepare($query);
         $stmt->execute();
         $results = $stmt->fetchAll();
-        dump($results);
         //dump($stmt->execute());
 
         // todo: need to add unique search in base class for username
