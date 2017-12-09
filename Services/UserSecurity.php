@@ -59,6 +59,8 @@ class UserSecurity
         /** @var $thisUser User */
         $thisUser = $this->getUserLoggedIn();
 
+        die ('xx'. $thisUser);
+
         //$thisPerson = $this->personManager->getPersonById($thisUser->getId());
         $thisPerson = $thisUser->getRelatedPerson();
 
