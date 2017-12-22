@@ -358,8 +358,9 @@ class BasePerson implements BasePersonInterface, JsonSerializable, CanNormalize
     /**
      * @return $this
      */
-    public function setEmailCanonical()
+    public function setEmailCanonical($emailAddress)
     {
+        $this->emailCanonical = $emailAddress;
         return $this;
     }
 
