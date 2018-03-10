@@ -6,8 +6,6 @@ use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
-use Platypuspie\AnchorcardsBundle\Overrides\CustomController;
-use Platypuspie\AnchorcardsBundle\Services\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,7 +14,16 @@ use FOS\UserBundle\Model\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType;
 
-class RegistrationController extends CustomController
+// todo:
+/*
+ * These lines were removed as they can't work with Twencha:
+ *
+ * must be fixed!
+ * use Platypuspie\AnchorcardsBundle\Overrides\CustomController;
+use Platypuspie\AnchorcardsBundle\Services\UserManager;
+ */
+
+class RegistrationController
 {
     /**
      * @Route("/registrationComplete", name="security_registrationComplete")
@@ -41,6 +48,7 @@ class RegistrationController extends CustomController
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
 
+        die('see above for todos');
         /** @var $userManager \Platypuspie\AnchorcardsBundle\Services\UserManager */
         $userManager        = $this->container->get('anchorcards.user_manager');
 
@@ -85,6 +93,7 @@ class RegistrationController extends CustomController
         // */
 
 
+        die('see above for todos');
         /** @var UserManager $userManager */
         $userManager = $this->get('anchorcards.user_manager');
 
@@ -103,6 +112,7 @@ class RegistrationController extends CustomController
         // may even be able to get form to handle a default redirect process and result handling
         if ($form->isValid()) {
             $data = $form->getData();
+            die('see above for todos');
             $resultCode = $userManager->createUserandPerson($data['email'], $data['plainPassword']);
             // check no other user exists with email address
             $msgType = '';
@@ -149,6 +159,7 @@ class RegistrationController extends CustomController
      */
     public function confirmAction(Request $request, $token)
     {
+        die('see above for todos');
         /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
         $userManager = $this->get('fos_user.user_manager');
 
@@ -167,6 +178,7 @@ class RegistrationController extends CustomController
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRM, $event);
 
+        die('see above for todos');
         $userManager->updateUser($user);
 
         if (null === $response = $event->getResponse()) {
