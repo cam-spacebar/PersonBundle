@@ -201,7 +201,19 @@ class BasePerson implements BasePersonInterface, JsonSerializable, CanNormalize
     }
 
     public function getFullName () {
-        return $this->getFirstName() .' '. $this->getLastName();
+        if (empty($this->getLastName())) {
+            return $this->getFirstName();
+        } else {
+            return $this->getFirstName() .' '. $this->getLastName();
+        }
+    }
+
+    public function getFullNameOrPlaceholder () {
+        if (empty($this->getFirstName())) {
+            return '[No Name]';
+        } else {
+            return $this->getFullName();
+        }
     }
 
     /**
