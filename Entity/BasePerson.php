@@ -367,6 +367,10 @@ class BasePerson implements BasePersonInterface, JsonSerializable, CanNormalize
         return $this->emailCanonical;
     }
 
+    static public function canonicalizeEmail ($email) {
+        return trim(strtolower($email));
+    }
+
     /**
      * @return $this
      */
@@ -390,7 +394,7 @@ class BasePerson implements BasePersonInterface, JsonSerializable, CanNormalize
     public function setEmail($email)
     {
         $this->email = $email;
-        $this->emailCanonical = strtolower($email);
+        $this->emailCanonical = self::canonicalizeEmail($email);
     }
 
     /**

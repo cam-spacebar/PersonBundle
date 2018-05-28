@@ -262,9 +262,11 @@ class BasePersonManager extends BaseEntityManager
     }
 
     public function findByEmail ($emailAddress) {
+        $canonicalizedEmailAddress = Person::canonicalizeEmail($emailAddress);
+
         $result = $this->repo->findOneBy (array (
-                'emailCanonical'     => $emailAddress
-            ));
+            'emailCanonical'     => $canonicalizedEmailAddress
+        ));
 
         return $result;
     }
