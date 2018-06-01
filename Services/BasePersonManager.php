@@ -270,4 +270,20 @@ class BasePersonManager extends BaseEntityManager
 
         return $result;
     }
+
+    public function doesExistByEmail ($email) {
+        $result = $this->findBy($email);
+
+        return (empty($result)) ? false : true;
+    }
+
+    public function errorIfExists ($email) {
+        if ($this->doesExistByEmail($email)) {
+            throw new \Exception ('person with email: '. $email .' already exists.');
+        }
+
+        return (empty($result)) ? false : true;
+    }
+
+
 }
