@@ -411,6 +411,8 @@ class BasePerson implements BasePersonInterface, JsonSerializable, CanNormalize
     public function setIsRegistered($isRegistered)
     {
         $this->isRegistered = $isRegistered;
+
+        return $this;
     }
 
     /**

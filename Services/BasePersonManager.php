@@ -272,7 +272,7 @@ class BasePersonManager extends BaseEntityManager
     }
 
     public function doesExistByEmail ($email) {
-        $result = $this->findBy($email);
+        $result = $this->findByEmail($email);
 
         return (empty($result)) ? false : true;
     }
