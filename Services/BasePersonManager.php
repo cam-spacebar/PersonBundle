@@ -39,7 +39,7 @@ class BasePersonManager extends BaseEntityManager
     }
 
     public function createNewWithValues ($email = '', $mobileNumber = '') {
-        $person = $this->createNew($email);
+        $person = $this->createNew();
 
         $person->setMobileNumber($mobileNumber);
         $person->setEmail($email);
@@ -160,13 +160,31 @@ class BasePersonManager extends BaseEntityManager
     }
 
     /**
+     * Canonicalize email
+     */
+    public function findOneByEmailCanonical ($email) {
+        $emailCanon = person::canonicalizeEmail($email);
+        return $this->findOneBy(array(
+            'emailCanonical'        => $emailCanon
+        ));
+    }
+
+    /**
+     * Canonicalize email
+     */
+    public function findOneByEmailCanonical ($email) {
+        $emailCanon = person::canonicalizeEmail($email);
+        return $this->findOneBy(array(
+            'emailCanonical'        => $emailCanon
+        ));
+    }
+
+    /**
      * @param $email
      * @return null|BasePerson
      */
     public function findOrCreatePersonByEmail ($email) {
-        $response = $this->getOnePerson (array (
-            'email'     => $email
-        ));
+        $response = $this->findOneByEmailCanonical ($email);
 
         if ($response == NULL) {
             // create new person
@@ -256,7 +274,7 @@ class BasePersonManager extends BaseEntityManager
     }
 
     public function doesPersonExistByEmail ($email) {
-        $person = $this->getPersonByEmail($email);
+        $person = $this->findOneByEmailCanonical($email);
 
         return (empty($person)) ? false : true;
     }
