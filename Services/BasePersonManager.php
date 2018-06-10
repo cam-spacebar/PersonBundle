@@ -170,16 +170,6 @@ class BasePersonManager extends BaseEntityManager
     }
 
     /**
-     * Canonicalize email
-     */
-    public function findOneByEmailCanonical ($email) {
-        $emailCanon = person::canonicalizeEmail($email);
-        return $this->findOneBy(array(
-            'emailCanonical'        => $emailCanon
-        ));
-    }
-
-    /**
      * @param $email
      * @return null|BasePerson
      */
