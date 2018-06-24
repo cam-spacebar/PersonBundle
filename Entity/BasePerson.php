@@ -39,7 +39,7 @@ use VisageFour\Bundle\ToolsBundle\Interfaces\CanNormalize;
  * @MappedSuperClass
  */
 class BasePerson implements BasePersonInterface, JsonSerializable, CanNormalize
-{
+{ 
     /**
      * @var int
      *
