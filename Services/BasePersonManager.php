@@ -60,6 +60,10 @@ class BasePersonManager extends BaseEntityManager
         return $response;
     }
 
+    /**
+     * @param $id
+     * @return null|Person
+     */
     public function getPersonById ($id) {
         $person       = $this->repo->findOneBy(array(
             'id' => $id
