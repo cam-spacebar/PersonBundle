@@ -3,10 +3,8 @@
 namespace VisageFour\Bundle\PersonBundle\Controller;
 
 use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -14,7 +12,6 @@ use FOS\UserBundle\Model\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType;
 
-// todo:
 /*
  * These lines were removed as they can't work with Twencha:
  *
