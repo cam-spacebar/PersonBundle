@@ -15,9 +15,11 @@ interface BaseFormTypeInterface
     public function throwFormResultCodeError($formResult);
     public function setFormResult($formResultCode);
 
-    // implemented form methods.
+    // super class form methods.
     public function buildForm(FormBuilderInterface $builder, array $options);
     public function configureOptions(OptionsResolver $resolver);
-    public function setFormTestDefaults();
+//    protected function setFormTestDefaults();      cannot implement protected methods.
+//    protected function getDefaultData();
+
     public function handleFormSubmission();
 }
