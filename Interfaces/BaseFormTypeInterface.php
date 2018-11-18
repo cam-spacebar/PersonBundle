@@ -21,5 +21,5 @@ interface BaseFormTypeInterface
 //    protected function setFormTestDefaults();      cannot implement protected methods.
 //    protected function getDefaultData();
 
-    public function handleFormSubmission();
+//    public function handleFormSubmission();       // deprecated.
 }
