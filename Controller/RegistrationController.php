@@ -61,7 +61,6 @@ class RegistrationController
         die ('updated person');
         // */
 
-
         // ADD ROLE_ADMIN
         /*
         $user = $userManager->findUserByEmail('cameronrobertburns@gmail.com');
