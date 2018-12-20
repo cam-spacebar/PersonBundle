@@ -69,7 +69,7 @@ class RegistrationController
         $user->addRole($role);
         $userManager->updateUser($user);
         PRINT 'user updated as '. $role;
-        dump($user->getRoles()); die();
+//        dump($user->getRoles()); die();
         // /*
 
         /** @var $mailer \FOS\UserBundle\Mailer\Mailer */
