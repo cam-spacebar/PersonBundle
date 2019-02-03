@@ -89,7 +89,7 @@ class BasePerson implements BasePersonInterface, JsonSerializable, CanNormalize
     /**
      * @var string
      *
-     * @ORM\Column(name="firstName", type="string", length=20, nullable=true)
+     * @ORM\Column(name="firstName", type="string", length=40, nullable=true)
      * @Groups({"zapierSpreadsheet"})
      * @Assert\NotBlank(groups={"registration"}, message="Name must be entered")
      */
