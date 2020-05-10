@@ -106,7 +106,7 @@ class RegistrationController
 
         // todo: this processing should occur in the form. The form needs to be updated to the new form structure.
         // may even be able to get form to handle a default redirect process and result handling
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             die('see above for todos');
             $resultCode = $userManager->createUserandPerson($data['email'], $data['plainPassword']);
