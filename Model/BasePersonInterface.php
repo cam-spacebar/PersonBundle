@@ -9,7 +9,7 @@
 
 namespace VisageFour\Bundle\PersonBundle\Model;
 
-use VisageFour\Bundle\PersonBundle\Entity\BaseUser;
+use Twencha\Bundle\EventRegistrationBundle\Entity\BaseUser;
 
 interface BasePersonInterface
 {
