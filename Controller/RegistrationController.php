@@ -17,7 +17,7 @@ use VisageFour\Bundle\PersonBundle\Form\UserRegistrationFormType;
  *
  * must be fixed!
  * use Platypuspie\AnchorcardsBundle\Overrides\CustomController;
-use Platypuspie\AnchorcardsBundle\Services\UserManager;
+use Platypuspie\AnchorcardsBundle\services\UserManager;
  */
 
 class RegistrationController

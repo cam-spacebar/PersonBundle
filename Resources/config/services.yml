@@ -1,4 +1,4 @@
-# VisageFour\PersonBundle\config\services.yml
+# VisageFour\PersonBundle\config\miscServices.yaml
 services:
     visage_four.base_person_manager:
         class: VisageFour\Bundle\PersonBundle\Services\BasePersonManager
