@@ -23,6 +23,6 @@ class PersonExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('miscServices.yaml');
+//        $loader->load('miscServices.yaml');
     }
 }
